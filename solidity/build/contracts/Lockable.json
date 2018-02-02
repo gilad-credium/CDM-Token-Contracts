@@ -1,0 +1,1356 @@
+{
+  "contractName": "Lockable",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "collect",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "isCollected",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "hasValue",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "pendingLocked",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "totalLocked",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "isConfirmed",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "getLockupReleaseTimestamp",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "cancel",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "isReleaseTime",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        },
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "accountLockedAmount",
+      "outputs": [
+        {
+          "name": "releaseTimestamp",
+          "type": "uint256"
+        },
+        {
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "name": "confirmed",
+          "type": "bool"
+        },
+        {
+          "name": "collected",
+          "type": "bool"
+        },
+        {
+          "name": "hasValue",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_releaseTimestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "lockup",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_targetToken",
+          "type": "address"
+        },
+        {
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "name": "_spender",
+          "type": "address"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "checkAllowance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "newOwner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "getLockupAmount",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "confirm",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "confirmedLocked",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_tokenLocker",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_targetToken",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "_releaseTimestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "PendingLockup",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "CancelLockup",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "ConfirmLockup",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "Collect",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "_prevOwner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnerUpdate",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "increaseTotalLocked",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "decreaseTotalLocked",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.11;\n\nimport \"./Owned.sol\";\nimport \"../interfaces/ITokenLocker.sol\";\n\ncontract Lockable is Owned, ITokenLocker {\n\n    uint256 public totalLocked = 0;\n\n    function Lockable(ITokenLocker _tokenLocker) public {\n        owner = _tokenLocker;\n    }\n\n    function increaseTotalLocked(uint256 _amount) public \n        ownerOnly\n        returns(uint256) \n    {\n        totalLocked = safeAdd(totalLocked, _amount);\n        return totalLocked;\n    }\n\n    function decreaseTotalLocked(uint256 _amount) public \n        ownerOnly\n        returns(uint256) \n    {\n        totalLocked = safeSub(totalLocked, _amount);\n        return totalLocked;\n    }\n\n}",
+  "sourcePath": "/home/taras/Workspace/vscode/cdm-token/solidity/contracts/util/Lockable.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/taras/Workspace/vscode/cdm-token/solidity/contracts/util/Lockable.sol",
+      "exportedSymbols": {
+        "Lockable": [
+          1444
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".11"
+          ]
+        },
+        "id": 1386,
+        "name": "PragmaDirective",
+        "src": "0:24:8"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1532,
+          "absolutePath": "/home/taras/Workspace/vscode/cdm-token/solidity/contracts/util/Owned.sol",
+          "file": "./Owned.sol",
+          "scope": 1445,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 1387,
+        "name": "ImportDirective",
+        "src": "26:21:8"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1385,
+          "absolutePath": "/home/taras/Workspace/vscode/cdm-token/solidity/contracts/interfaces/ITokenLocker.sol",
+          "file": "../interfaces/ITokenLocker.sol",
+          "scope": 1445,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 1388,
+        "name": "ImportDirective",
+        "src": "48:40:8"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            1062,
+            1384,
+            1531,
+            1706
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            1444,
+            1384,
+            1531,
+            1706,
+            1062
+          ],
+          "name": "Lockable",
+          "scope": 1445
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Owned",
+                  "referencedDeclaration": 1531,
+                  "type": "contract Owned"
+                },
+                "id": 1389,
+                "name": "UserDefinedTypeName",
+                "src": "111:5:8"
+              }
+            ],
+            "id": 1390,
+            "name": "InheritanceSpecifier",
+            "src": "111:5:8"
+          },
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "ITokenLocker",
+                  "referencedDeclaration": 1384,
+                  "type": "contract ITokenLocker"
+                },
+                "id": 1391,
+                "name": "UserDefinedTypeName",
+                "src": "118:12:8"
+              }
+            ],
+            "id": 1392,
+            "name": "InheritanceSpecifier",
+            "src": "118:12:8"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "totalLocked",
+              "scope": 1444,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 1393,
+                "name": "ElementaryTypeName",
+                "src": "138:7:8"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "30",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "number",
+                  "type": "int_const 0",
+                  "value": "0"
+                },
+                "id": 1394,
+                "name": "Literal",
+                "src": "167:1:8"
+              }
+            ],
+            "id": 1395,
+            "name": "VariableDeclaration",
+            "src": "138:30:8"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": true,
+              "modifiers": [
+                null
+              ],
+              "name": "Lockable",
+              "payable": false,
+              "scope": 1444,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_tokenLocker",
+                      "scope": 1405,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract ITokenLocker",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "ITokenLocker",
+                          "referencedDeclaration": 1384,
+                          "type": "contract ITokenLocker"
+                        },
+                        "id": 1396,
+                        "name": "UserDefinedTypeName",
+                        "src": "193:12:8"
+                      }
+                    ],
+                    "id": 1397,
+                    "name": "VariableDeclaration",
+                    "src": "193:25:8"
+                  }
+                ],
+                "id": 1398,
+                "name": "ParameterList",
+                "src": "192:27:8"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 1399,
+                "name": "ParameterList",
+                "src": "227:0:8"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "address"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                1454
+                              ],
+                              "referencedDeclaration": 1454,
+                              "type": "address",
+                              "value": "owner"
+                            },
+                            "id": 1400,
+                            "name": "Identifier",
+                            "src": "237:5:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1397,
+                              "type": "contract ITokenLocker",
+                              "value": "_tokenLocker"
+                            },
+                            "id": 1401,
+                            "name": "Identifier",
+                            "src": "245:12:8"
+                          }
+                        ],
+                        "id": 1402,
+                        "name": "Assignment",
+                        "src": "237:20:8"
+                      }
+                    ],
+                    "id": 1403,
+                    "name": "ExpressionStatement",
+                    "src": "237:20:8"
+                  }
+                ],
+                "id": 1404,
+                "name": "Block",
+                "src": "227:37:8"
+              }
+            ],
+            "id": 1405,
+            "name": "FunctionDefinition",
+            "src": "175:89:8"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "increaseTotalLocked",
+              "payable": false,
+              "scope": 1444,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_amount",
+                      "scope": 1424,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1406,
+                        "name": "ElementaryTypeName",
+                        "src": "299:7:8"
+                      }
+                    ],
+                    "id": 1407,
+                    "name": "VariableDeclaration",
+                    "src": "299:15:8"
+                  }
+                ],
+                "id": 1408,
+                "name": "ParameterList",
+                "src": "298:17:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1424,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1411,
+                        "name": "ElementaryTypeName",
+                        "src": "358:7:8"
+                      }
+                    ],
+                    "id": 1412,
+                    "name": "VariableDeclaration",
+                    "src": "358:7:8"
+                  }
+                ],
+                "id": 1413,
+                "name": "ParameterList",
+                "src": "357:9:8"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 1482,
+                      "type": "modifier ()",
+                      "value": "ownerOnly"
+                    },
+                    "id": 1409,
+                    "name": "Identifier",
+                    "src": "332:9:8"
+                  }
+                ],
+                "id": 1410,
+                "name": "ModifierInvocation",
+                "src": "332:9:8"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1395,
+                              "type": "uint256",
+                              "value": "totalLocked"
+                            },
+                            "id": 1414,
+                            "name": "Identifier",
+                            "src": "382:11:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "uint256",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1655,
+                                  "type": "function (uint256,uint256) pure returns (uint256)",
+                                  "value": "safeAdd"
+                                },
+                                "id": 1415,
+                                "name": "Identifier",
+                                "src": "396:7:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1395,
+                                  "type": "uint256",
+                                  "value": "totalLocked"
+                                },
+                                "id": 1416,
+                                "name": "Identifier",
+                                "src": "404:11:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1407,
+                                  "type": "uint256",
+                                  "value": "_amount"
+                                },
+                                "id": 1417,
+                                "name": "Identifier",
+                                "src": "417:7:8"
+                              }
+                            ],
+                            "id": 1418,
+                            "name": "FunctionCall",
+                            "src": "396:29:8"
+                          }
+                        ],
+                        "id": 1419,
+                        "name": "Assignment",
+                        "src": "382:43:8"
+                      }
+                    ],
+                    "id": 1420,
+                    "name": "ExpressionStatement",
+                    "src": "382:43:8"
+                  },
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 1413
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 1395,
+                          "type": "uint256",
+                          "value": "totalLocked"
+                        },
+                        "id": 1421,
+                        "name": "Identifier",
+                        "src": "442:11:8"
+                      }
+                    ],
+                    "id": 1422,
+                    "name": "Return",
+                    "src": "435:18:8"
+                  }
+                ],
+                "id": 1423,
+                "name": "Block",
+                "src": "372:88:8"
+              }
+            ],
+            "id": 1424,
+            "name": "FunctionDefinition",
+            "src": "270:190:8"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "decreaseTotalLocked",
+              "payable": false,
+              "scope": 1444,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_amount",
+                      "scope": 1443,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1425,
+                        "name": "ElementaryTypeName",
+                        "src": "495:7:8"
+                      }
+                    ],
+                    "id": 1426,
+                    "name": "VariableDeclaration",
+                    "src": "495:15:8"
+                  }
+                ],
+                "id": 1427,
+                "name": "ParameterList",
+                "src": "494:17:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1443,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1430,
+                        "name": "ElementaryTypeName",
+                        "src": "554:7:8"
+                      }
+                    ],
+                    "id": 1431,
+                    "name": "VariableDeclaration",
+                    "src": "554:7:8"
+                  }
+                ],
+                "id": 1432,
+                "name": "ParameterList",
+                "src": "553:9:8"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 1482,
+                      "type": "modifier ()",
+                      "value": "ownerOnly"
+                    },
+                    "id": 1428,
+                    "name": "Identifier",
+                    "src": "528:9:8"
+                  }
+                ],
+                "id": 1429,
+                "name": "ModifierInvocation",
+                "src": "528:9:8"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1395,
+                              "type": "uint256",
+                              "value": "totalLocked"
+                            },
+                            "id": 1433,
+                            "name": "Identifier",
+                            "src": "578:11:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "uint256",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1675,
+                                  "type": "function (uint256,uint256) pure returns (uint256)",
+                                  "value": "safeSub"
+                                },
+                                "id": 1434,
+                                "name": "Identifier",
+                                "src": "592:7:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1395,
+                                  "type": "uint256",
+                                  "value": "totalLocked"
+                                },
+                                "id": 1435,
+                                "name": "Identifier",
+                                "src": "600:11:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1426,
+                                  "type": "uint256",
+                                  "value": "_amount"
+                                },
+                                "id": 1436,
+                                "name": "Identifier",
+                                "src": "613:7:8"
+                              }
+                            ],
+                            "id": 1437,
+                            "name": "FunctionCall",
+                            "src": "592:29:8"
+                          }
+                        ],
+                        "id": 1438,
+                        "name": "Assignment",
+                        "src": "578:43:8"
+                      }
+                    ],
+                    "id": 1439,
+                    "name": "ExpressionStatement",
+                    "src": "578:43:8"
+                  },
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 1432
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 1395,
+                          "type": "uint256",
+                          "value": "totalLocked"
+                        },
+                        "id": 1440,
+                        "name": "Identifier",
+                        "src": "638:11:8"
+                      }
+                    ],
+                    "id": 1441,
+                    "name": "Return",
+                    "src": "631:18:8"
+                  }
+                ],
+                "id": 1442,
+                "name": "Block",
+                "src": "568:88:8"
+              }
+            ],
+            "id": 1443,
+            "name": "FunctionDefinition",
+            "src": "466:190:8"
+          }
+        ],
+        "id": 1444,
+        "name": "ContractDefinition",
+        "src": "90:569:8"
+      }
+    ],
+    "id": 1445,
+    "name": "SourceUnit",
+    "src": "0:659:8"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-02-02T12:39:15.433Z"
+}

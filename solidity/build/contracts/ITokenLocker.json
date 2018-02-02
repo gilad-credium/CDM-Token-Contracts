@@ -1,0 +1,4159 @@
+{
+  "contractName": "ITokenLocker",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "pendingLocked",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        },
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "accountLockedAmount",
+      "outputs": [
+        {
+          "name": "releaseTimestamp",
+          "type": "uint256"
+        },
+        {
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "name": "confirmed",
+          "type": "bool"
+        },
+        {
+          "name": "collected",
+          "type": "bool"
+        },
+        {
+          "name": "hasValue",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "confirmedLocked",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_targetToken",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "_releaseTimestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "PendingLockup",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "CancelLockup",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "ConfirmLockup",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "Collect",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_releaseTimestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "lockup",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "cancel",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "confirm",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "collect",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "getLockupAmount",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "getLockupReleaseTimestamp",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "isConfirmed",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "isCollected",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "hasValue",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_targetToken",
+          "type": "address"
+        }
+      ],
+      "name": "isReleaseTime",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_targetToken",
+          "type": "address"
+        },
+        {
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "name": "_spender",
+          "type": "address"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "checkAllowance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.11;\n\nimport \"./IOwned.sol\";\nimport \"../util/Utils.sol\";\nimport \"./IERC20Token.sol\";\n\ncontract ITokenLocker is IOwned, Utils {\n    \n    uint256 public pendingLocked = 0;\n    uint256 public confirmedLocked = 0;\n    mapping (address => mapping (address => Lock)) public accountLockedAmount;\n\n    event PendingLockup(address indexed _recipient, IERC20Token indexed _targetToken, uint256 _amount, uint256 _releaseTimestamp);\n    event CancelLockup(address indexed _owner, address indexed _recipient, IERC20Token indexed _targetToken);\n    event ConfirmLockup(address indexed _recipient, IERC20Token indexed _targetToken);\n    event Collect(address indexed _recipient, IERC20Token indexed _targetToken);\n\n    struct Lock {\n        uint256 releaseTimestamp;\n        uint256 amount;\n        bool confirmed;\n        bool collected;\n        bool hasValue;\n    }\n\n    modifier containsRecipient(address _recipient, IERC20Token _targetToken) {\n        require(hasValue(_recipient, _targetToken));\n        _;\n    }\n\n    modifier notConfirmed(address _recipient, IERC20Token _targetToken) {\n        require(!isConfirmed(_recipient, _targetToken));\n        _;\n    }\n\n    modifier notCollected(address _recipient, IERC20Token _targetToken) {\n        require(!isCollected(_recipient, _targetToken));\n        _;\n    }\n\n    function lockup(address _recipient, IERC20Token _targetToken, uint256 _amount, uint256 _releaseTimestamp) public returns(bool);\n\n    function cancel(address _recipient, IERC20Token _targetToken) public returns(bool);\n\n    function confirm(IERC20Token _targetToken) public returns(bool);\n\n    function collect(IERC20Token _targetToken) public returns(bool);\n\n    function getLockupAmount(address _recipient, IERC20Token _targetToken) public view returns(uint256) {\n        return accountLockedAmount[_recipient][_targetToken].amount;\n    }\n\n    function getLockupReleaseTimestamp(address _recipient, IERC20Token _targetToken) public view returns(uint256) {\n        return accountLockedAmount[_recipient][_targetToken].releaseTimestamp;\n    }\n\n    function isConfirmed(address _recipient, IERC20Token _targetToken) public view returns(bool) {\n        return accountLockedAmount[_recipient][_targetToken].confirmed;\n    }\n\n    function isCollected(address _recipient, IERC20Token _targetToken) public view returns(bool) {\n        return accountLockedAmount[_recipient][_targetToken].collected;\n    }\n\n    function hasValue(address _recipient, IERC20Token _targetToken) public view returns(bool) {\n        return accountLockedAmount[_recipient][_targetToken].hasValue;\n    }\n\n    function isReleaseTime(address _recipient, IERC20Token _targetToken) public view returns(bool) {\n        return accountLockedAmount[_recipient][_targetToken].releaseTimestamp <= now;\n    }\n\n    function checkAllowance(IERC20Token _targetToken, address _owner, address _spender, uint256 _amount) public view returns(bool) {\n        return _targetToken.allowance(_owner, _spender) >= safeAdd(_amount, safeAdd(pendingLocked, confirmedLocked));\n    }\n\n}",
+  "sourcePath": "/home/taras/Workspace/vscode/cdm-token/solidity/contracts/interfaces/ITokenLocker.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/taras/Workspace/vscode/cdm-token/solidity/contracts/interfaces/ITokenLocker.sol",
+      "exportedSymbols": {
+        "ITokenLocker": [
+          1414
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".11"
+          ]
+        },
+        "id": 1138,
+        "name": "PragmaDirective",
+        "src": "0:24:8"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1093,
+          "absolutePath": "/home/taras/Workspace/vscode/cdm-token/solidity/contracts/interfaces/IOwned.sol",
+          "file": "./IOwned.sol",
+          "scope": 1415,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 1139,
+        "name": "ImportDirective",
+        "src": "26:22:8"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1670,
+          "absolutePath": "/home/taras/Workspace/vscode/cdm-token/solidity/contracts/util/Utils.sol",
+          "file": "../util/Utils.sol",
+          "scope": 1415,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 1140,
+        "name": "ImportDirective",
+        "src": "49:27:8"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1076,
+          "absolutePath": "/home/taras/Workspace/vscode/cdm-token/solidity/contracts/interfaces/IERC20Token.sol",
+          "file": "./IERC20Token.sol",
+          "scope": 1415,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 1141,
+        "name": "ImportDirective",
+        "src": "77:27:8"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            1092,
+            1669
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            1414,
+            1669,
+            1092
+          ],
+          "name": "ITokenLocker",
+          "scope": 1415
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "IOwned",
+                  "referencedDeclaration": 1092,
+                  "type": "contract IOwned"
+                },
+                "id": 1142,
+                "name": "UserDefinedTypeName",
+                "src": "131:6:8"
+              }
+            ],
+            "id": 1143,
+            "name": "InheritanceSpecifier",
+            "src": "131:6:8"
+          },
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Utils",
+                  "referencedDeclaration": 1669,
+                  "type": "contract Utils"
+                },
+                "id": 1144,
+                "name": "UserDefinedTypeName",
+                "src": "139:5:8"
+              }
+            ],
+            "id": 1145,
+            "name": "InheritanceSpecifier",
+            "src": "139:5:8"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "pendingLocked",
+              "scope": 1414,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 1146,
+                "name": "ElementaryTypeName",
+                "src": "156:7:8"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "30",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "number",
+                  "type": "int_const 0",
+                  "value": "0"
+                },
+                "id": 1147,
+                "name": "Literal",
+                "src": "187:1:8"
+              }
+            ],
+            "id": 1148,
+            "name": "VariableDeclaration",
+            "src": "156:32:8"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "confirmedLocked",
+              "scope": 1414,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 1149,
+                "name": "ElementaryTypeName",
+                "src": "194:7:8"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "30",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "number",
+                  "type": "int_const 0",
+                  "value": "0"
+                },
+                "id": 1150,
+                "name": "Literal",
+                "src": "227:1:8"
+              }
+            ],
+            "id": 1151,
+            "name": "VariableDeclaration",
+            "src": "194:34:8"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "accountLockedAmount",
+              "scope": 1414,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => mapping(address => struct ITokenLocker.Lock storage ref))",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => mapping(address => struct ITokenLocker.Lock storage ref))"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 1152,
+                    "name": "ElementaryTypeName",
+                    "src": "243:7:8"
+                  },
+                  {
+                    "attributes": {
+                      "type": "mapping(address => struct ITokenLocker.Lock storage ref)"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1153,
+                        "name": "ElementaryTypeName",
+                        "src": "263:7:8"
+                      },
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "Lock",
+                          "referencedDeclaration": 1198,
+                          "type": "struct ITokenLocker.Lock storage pointer"
+                        },
+                        "id": 1154,
+                        "name": "UserDefinedTypeName",
+                        "src": "274:4:8"
+                      }
+                    ],
+                    "id": 1155,
+                    "name": "Mapping",
+                    "src": "254:25:8"
+                  }
+                ],
+                "id": 1156,
+                "name": "Mapping",
+                "src": "234:46:8"
+              }
+            ],
+            "id": 1157,
+            "name": "VariableDeclaration",
+            "src": "234:73:8"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "PendingLockup"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "_recipient",
+                      "scope": 1167,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1158,
+                        "name": "ElementaryTypeName",
+                        "src": "334:7:8"
+                      }
+                    ],
+                    "id": 1159,
+                    "name": "VariableDeclaration",
+                    "src": "334:26:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "_targetToken",
+                      "scope": 1167,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1160,
+                        "name": "UserDefinedTypeName",
+                        "src": "362:11:8"
+                      }
+                    ],
+                    "id": 1161,
+                    "name": "VariableDeclaration",
+                    "src": "362:32:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "_amount",
+                      "scope": 1167,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1162,
+                        "name": "ElementaryTypeName",
+                        "src": "396:7:8"
+                      }
+                    ],
+                    "id": 1163,
+                    "name": "VariableDeclaration",
+                    "src": "396:15:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "_releaseTimestamp",
+                      "scope": 1167,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1164,
+                        "name": "ElementaryTypeName",
+                        "src": "413:7:8"
+                      }
+                    ],
+                    "id": 1165,
+                    "name": "VariableDeclaration",
+                    "src": "413:25:8"
+                  }
+                ],
+                "id": 1166,
+                "name": "ParameterList",
+                "src": "333:106:8"
+              }
+            ],
+            "id": 1167,
+            "name": "EventDefinition",
+            "src": "314:126:8"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "CancelLockup"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "_owner",
+                      "scope": 1175,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1168,
+                        "name": "ElementaryTypeName",
+                        "src": "464:7:8"
+                      }
+                    ],
+                    "id": 1169,
+                    "name": "VariableDeclaration",
+                    "src": "464:22:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "_recipient",
+                      "scope": 1175,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1170,
+                        "name": "ElementaryTypeName",
+                        "src": "488:7:8"
+                      }
+                    ],
+                    "id": 1171,
+                    "name": "VariableDeclaration",
+                    "src": "488:26:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "_targetToken",
+                      "scope": 1175,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1172,
+                        "name": "UserDefinedTypeName",
+                        "src": "516:11:8"
+                      }
+                    ],
+                    "id": 1173,
+                    "name": "VariableDeclaration",
+                    "src": "516:32:8"
+                  }
+                ],
+                "id": 1174,
+                "name": "ParameterList",
+                "src": "463:86:8"
+              }
+            ],
+            "id": 1175,
+            "name": "EventDefinition",
+            "src": "445:105:8"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "ConfirmLockup"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "_recipient",
+                      "scope": 1181,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1176,
+                        "name": "ElementaryTypeName",
+                        "src": "575:7:8"
+                      }
+                    ],
+                    "id": 1177,
+                    "name": "VariableDeclaration",
+                    "src": "575:26:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "_targetToken",
+                      "scope": 1181,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1178,
+                        "name": "UserDefinedTypeName",
+                        "src": "603:11:8"
+                      }
+                    ],
+                    "id": 1179,
+                    "name": "VariableDeclaration",
+                    "src": "603:32:8"
+                  }
+                ],
+                "id": 1180,
+                "name": "ParameterList",
+                "src": "574:62:8"
+              }
+            ],
+            "id": 1181,
+            "name": "EventDefinition",
+            "src": "555:82:8"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "Collect"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "_recipient",
+                      "scope": 1187,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1182,
+                        "name": "ElementaryTypeName",
+                        "src": "656:7:8"
+                      }
+                    ],
+                    "id": 1183,
+                    "name": "VariableDeclaration",
+                    "src": "656:26:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "_targetToken",
+                      "scope": 1187,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1184,
+                        "name": "UserDefinedTypeName",
+                        "src": "684:11:8"
+                      }
+                    ],
+                    "id": 1185,
+                    "name": "VariableDeclaration",
+                    "src": "684:32:8"
+                  }
+                ],
+                "id": 1186,
+                "name": "ParameterList",
+                "src": "655:62:8"
+              }
+            ],
+            "id": 1187,
+            "name": "EventDefinition",
+            "src": "642:76:8"
+          },
+          {
+            "attributes": {
+              "canonicalName": "ITokenLocker.Lock",
+              "name": "Lock",
+              "scope": 1414,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "releaseTimestamp",
+                  "scope": 1198,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 1188,
+                    "name": "ElementaryTypeName",
+                    "src": "746:7:8"
+                  }
+                ],
+                "id": 1189,
+                "name": "VariableDeclaration",
+                "src": "746:24:8"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "amount",
+                  "scope": 1198,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 1190,
+                    "name": "ElementaryTypeName",
+                    "src": "780:7:8"
+                  }
+                ],
+                "id": 1191,
+                "name": "VariableDeclaration",
+                "src": "780:14:8"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "confirmed",
+                  "scope": 1198,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bool",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 1192,
+                    "name": "ElementaryTypeName",
+                    "src": "804:4:8"
+                  }
+                ],
+                "id": 1193,
+                "name": "VariableDeclaration",
+                "src": "804:14:8"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "collected",
+                  "scope": 1198,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bool",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 1194,
+                    "name": "ElementaryTypeName",
+                    "src": "828:4:8"
+                  }
+                ],
+                "id": 1195,
+                "name": "VariableDeclaration",
+                "src": "828:14:8"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "hasValue",
+                  "scope": 1198,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bool",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 1196,
+                    "name": "ElementaryTypeName",
+                    "src": "852:4:8"
+                  }
+                ],
+                "id": 1197,
+                "name": "VariableDeclaration",
+                "src": "852:13:8"
+              }
+            ],
+            "id": 1198,
+            "name": "StructDefinition",
+            "src": "724:148:8"
+          },
+          {
+            "attributes": {
+              "name": "containsRecipient",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 1213,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1199,
+                        "name": "ElementaryTypeName",
+                        "src": "905:7:8"
+                      }
+                    ],
+                    "id": 1200,
+                    "name": "VariableDeclaration",
+                    "src": "905:18:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1213,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1201,
+                        "name": "UserDefinedTypeName",
+                        "src": "925:11:8"
+                      }
+                    ],
+                    "id": 1202,
+                    "name": "VariableDeclaration",
+                    "src": "925:24:8"
+                  }
+                ],
+                "id": 1203,
+                "name": "ParameterList",
+                "src": "904:46:8"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1684,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 1204,
+                            "name": "Identifier",
+                            "src": "961:7:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "bool",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_contract$_IERC20Token_$1075",
+                                      "typeString": "contract IERC20Token"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1366,
+                                  "type": "function (address,contract IERC20Token) view returns (bool)",
+                                  "value": "hasValue"
+                                },
+                                "id": 1205,
+                                "name": "Identifier",
+                                "src": "969:8:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1200,
+                                  "type": "address",
+                                  "value": "_recipient"
+                                },
+                                "id": 1206,
+                                "name": "Identifier",
+                                "src": "978:10:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1202,
+                                  "type": "contract IERC20Token",
+                                  "value": "_targetToken"
+                                },
+                                "id": 1207,
+                                "name": "Identifier",
+                                "src": "990:12:8"
+                              }
+                            ],
+                            "id": 1208,
+                            "name": "FunctionCall",
+                            "src": "969:34:8"
+                          }
+                        ],
+                        "id": 1209,
+                        "name": "FunctionCall",
+                        "src": "961:43:8"
+                      }
+                    ],
+                    "id": 1210,
+                    "name": "ExpressionStatement",
+                    "src": "961:43:8"
+                  },
+                  {
+                    "id": 1211,
+                    "name": "PlaceholderStatement",
+                    "src": "1014:1:8"
+                  }
+                ],
+                "id": 1212,
+                "name": "Block",
+                "src": "951:71:8"
+              }
+            ],
+            "id": 1213,
+            "name": "ModifierDefinition",
+            "src": "878:144:8"
+          },
+          {
+            "attributes": {
+              "name": "notConfirmed",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 1229,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1214,
+                        "name": "ElementaryTypeName",
+                        "src": "1050:7:8"
+                      }
+                    ],
+                    "id": 1215,
+                    "name": "VariableDeclaration",
+                    "src": "1050:18:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1229,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1216,
+                        "name": "UserDefinedTypeName",
+                        "src": "1070:11:8"
+                      }
+                    ],
+                    "id": 1217,
+                    "name": "VariableDeclaration",
+                    "src": "1070:24:8"
+                  }
+                ],
+                "id": 1218,
+                "name": "ParameterList",
+                "src": "1049:46:8"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1684,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 1219,
+                            "name": "Identifier",
+                            "src": "1106:7:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "!",
+                              "prefix": true,
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "type": "bool",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_address",
+                                          "typeString": "address"
+                                        },
+                                        {
+                                          "typeIdentifier": "t_contract$_IERC20Token_$1075",
+                                          "typeString": "contract IERC20Token"
+                                        }
+                                      ],
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1332,
+                                      "type": "function (address,contract IERC20Token) view returns (bool)",
+                                      "value": "isConfirmed"
+                                    },
+                                    "id": 1220,
+                                    "name": "Identifier",
+                                    "src": "1115:11:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1215,
+                                      "type": "address",
+                                      "value": "_recipient"
+                                    },
+                                    "id": 1221,
+                                    "name": "Identifier",
+                                    "src": "1127:10:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1217,
+                                      "type": "contract IERC20Token",
+                                      "value": "_targetToken"
+                                    },
+                                    "id": 1222,
+                                    "name": "Identifier",
+                                    "src": "1139:12:8"
+                                  }
+                                ],
+                                "id": 1223,
+                                "name": "FunctionCall",
+                                "src": "1115:37:8"
+                              }
+                            ],
+                            "id": 1224,
+                            "name": "UnaryOperation",
+                            "src": "1114:38:8"
+                          }
+                        ],
+                        "id": 1225,
+                        "name": "FunctionCall",
+                        "src": "1106:47:8"
+                      }
+                    ],
+                    "id": 1226,
+                    "name": "ExpressionStatement",
+                    "src": "1106:47:8"
+                  },
+                  {
+                    "id": 1227,
+                    "name": "PlaceholderStatement",
+                    "src": "1163:1:8"
+                  }
+                ],
+                "id": 1228,
+                "name": "Block",
+                "src": "1096:75:8"
+              }
+            ],
+            "id": 1229,
+            "name": "ModifierDefinition",
+            "src": "1028:143:8"
+          },
+          {
+            "attributes": {
+              "name": "notCollected",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 1245,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1230,
+                        "name": "ElementaryTypeName",
+                        "src": "1199:7:8"
+                      }
+                    ],
+                    "id": 1231,
+                    "name": "VariableDeclaration",
+                    "src": "1199:18:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1245,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1232,
+                        "name": "UserDefinedTypeName",
+                        "src": "1219:11:8"
+                      }
+                    ],
+                    "id": 1233,
+                    "name": "VariableDeclaration",
+                    "src": "1219:24:8"
+                  }
+                ],
+                "id": 1234,
+                "name": "ParameterList",
+                "src": "1198:46:8"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1684,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 1235,
+                            "name": "Identifier",
+                            "src": "1255:7:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "!",
+                              "prefix": true,
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "type": "bool",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_address",
+                                          "typeString": "address"
+                                        },
+                                        {
+                                          "typeIdentifier": "t_contract$_IERC20Token_$1075",
+                                          "typeString": "contract IERC20Token"
+                                        }
+                                      ],
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1349,
+                                      "type": "function (address,contract IERC20Token) view returns (bool)",
+                                      "value": "isCollected"
+                                    },
+                                    "id": 1236,
+                                    "name": "Identifier",
+                                    "src": "1264:11:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1231,
+                                      "type": "address",
+                                      "value": "_recipient"
+                                    },
+                                    "id": 1237,
+                                    "name": "Identifier",
+                                    "src": "1276:10:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1233,
+                                      "type": "contract IERC20Token",
+                                      "value": "_targetToken"
+                                    },
+                                    "id": 1238,
+                                    "name": "Identifier",
+                                    "src": "1288:12:8"
+                                  }
+                                ],
+                                "id": 1239,
+                                "name": "FunctionCall",
+                                "src": "1264:37:8"
+                              }
+                            ],
+                            "id": 1240,
+                            "name": "UnaryOperation",
+                            "src": "1263:38:8"
+                          }
+                        ],
+                        "id": 1241,
+                        "name": "FunctionCall",
+                        "src": "1255:47:8"
+                      }
+                    ],
+                    "id": 1242,
+                    "name": "ExpressionStatement",
+                    "src": "1255:47:8"
+                  },
+                  {
+                    "id": 1243,
+                    "name": "PlaceholderStatement",
+                    "src": "1312:1:8"
+                  }
+                ],
+                "id": 1244,
+                "name": "Block",
+                "src": "1245:75:8"
+              }
+            ],
+            "id": 1245,
+            "name": "ModifierDefinition",
+            "src": "1177:143:8"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "constant": false,
+              "implemented": false,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "lockup",
+              "payable": false,
+              "scope": 1414,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 1258,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1246,
+                        "name": "ElementaryTypeName",
+                        "src": "1342:7:8"
+                      }
+                    ],
+                    "id": 1247,
+                    "name": "VariableDeclaration",
+                    "src": "1342:18:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1258,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1248,
+                        "name": "UserDefinedTypeName",
+                        "src": "1362:11:8"
+                      }
+                    ],
+                    "id": 1249,
+                    "name": "VariableDeclaration",
+                    "src": "1362:24:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_amount",
+                      "scope": 1258,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1250,
+                        "name": "ElementaryTypeName",
+                        "src": "1388:7:8"
+                      }
+                    ],
+                    "id": 1251,
+                    "name": "VariableDeclaration",
+                    "src": "1388:15:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_releaseTimestamp",
+                      "scope": 1258,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1252,
+                        "name": "ElementaryTypeName",
+                        "src": "1405:7:8"
+                      }
+                    ],
+                    "id": 1253,
+                    "name": "VariableDeclaration",
+                    "src": "1405:25:8"
+                  }
+                ],
+                "id": 1254,
+                "name": "ParameterList",
+                "src": "1341:90:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1258,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 1255,
+                        "name": "ElementaryTypeName",
+                        "src": "1447:4:8"
+                      }
+                    ],
+                    "id": 1256,
+                    "name": "VariableDeclaration",
+                    "src": "1447:4:8"
+                  }
+                ],
+                "id": 1257,
+                "name": "ParameterList",
+                "src": "1446:6:8"
+              }
+            ],
+            "id": 1258,
+            "name": "FunctionDefinition",
+            "src": "1326:127:8"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "constant": false,
+              "implemented": false,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "cancel",
+              "payable": false,
+              "scope": 1414,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 1267,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1259,
+                        "name": "ElementaryTypeName",
+                        "src": "1475:7:8"
+                      }
+                    ],
+                    "id": 1260,
+                    "name": "VariableDeclaration",
+                    "src": "1475:18:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1267,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1261,
+                        "name": "UserDefinedTypeName",
+                        "src": "1495:11:8"
+                      }
+                    ],
+                    "id": 1262,
+                    "name": "VariableDeclaration",
+                    "src": "1495:24:8"
+                  }
+                ],
+                "id": 1263,
+                "name": "ParameterList",
+                "src": "1474:46:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1267,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 1264,
+                        "name": "ElementaryTypeName",
+                        "src": "1536:4:8"
+                      }
+                    ],
+                    "id": 1265,
+                    "name": "VariableDeclaration",
+                    "src": "1536:4:8"
+                  }
+                ],
+                "id": 1266,
+                "name": "ParameterList",
+                "src": "1535:6:8"
+              }
+            ],
+            "id": 1267,
+            "name": "FunctionDefinition",
+            "src": "1459:83:8"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "constant": false,
+              "implemented": false,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "confirm",
+              "payable": false,
+              "scope": 1414,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1274,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1268,
+                        "name": "UserDefinedTypeName",
+                        "src": "1565:11:8"
+                      }
+                    ],
+                    "id": 1269,
+                    "name": "VariableDeclaration",
+                    "src": "1565:24:8"
+                  }
+                ],
+                "id": 1270,
+                "name": "ParameterList",
+                "src": "1564:26:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1274,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 1271,
+                        "name": "ElementaryTypeName",
+                        "src": "1606:4:8"
+                      }
+                    ],
+                    "id": 1272,
+                    "name": "VariableDeclaration",
+                    "src": "1606:4:8"
+                  }
+                ],
+                "id": 1273,
+                "name": "ParameterList",
+                "src": "1605:6:8"
+              }
+            ],
+            "id": 1274,
+            "name": "FunctionDefinition",
+            "src": "1548:64:8"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "constant": false,
+              "implemented": false,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "collect",
+              "payable": false,
+              "scope": 1414,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1281,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1275,
+                        "name": "UserDefinedTypeName",
+                        "src": "1635:11:8"
+                      }
+                    ],
+                    "id": 1276,
+                    "name": "VariableDeclaration",
+                    "src": "1635:24:8"
+                  }
+                ],
+                "id": 1277,
+                "name": "ParameterList",
+                "src": "1634:26:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1281,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 1278,
+                        "name": "ElementaryTypeName",
+                        "src": "1676:4:8"
+                      }
+                    ],
+                    "id": 1279,
+                    "name": "VariableDeclaration",
+                    "src": "1676:4:8"
+                  }
+                ],
+                "id": 1280,
+                "name": "ParameterList",
+                "src": "1675:6:8"
+              }
+            ],
+            "id": 1281,
+            "name": "FunctionDefinition",
+            "src": "1618:64:8"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getLockupAmount",
+              "payable": false,
+              "scope": 1414,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 1298,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1282,
+                        "name": "ElementaryTypeName",
+                        "src": "1713:7:8"
+                      }
+                    ],
+                    "id": 1283,
+                    "name": "VariableDeclaration",
+                    "src": "1713:18:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1298,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1284,
+                        "name": "UserDefinedTypeName",
+                        "src": "1733:11:8"
+                      }
+                    ],
+                    "id": 1285,
+                    "name": "VariableDeclaration",
+                    "src": "1733:24:8"
+                  }
+                ],
+                "id": 1286,
+                "name": "ParameterList",
+                "src": "1712:46:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1298,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1287,
+                        "name": "ElementaryTypeName",
+                        "src": "1779:7:8"
+                      }
+                    ],
+                    "id": 1288,
+                    "name": "VariableDeclaration",
+                    "src": "1779:7:8"
+                  }
+                ],
+                "id": 1289,
+                "name": "ParameterList",
+                "src": "1778:9:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 1289
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "member_name": "amount",
+                          "referencedDeclaration": 1191,
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "type": "struct ITokenLocker.Lock storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "mapping(address => struct ITokenLocker.Lock storage ref)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1157,
+                                      "type": "mapping(address => mapping(address => struct ITokenLocker.Lock storage ref))",
+                                      "value": "accountLockedAmount"
+                                    },
+                                    "id": 1290,
+                                    "name": "Identifier",
+                                    "src": "1805:19:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1283,
+                                      "type": "address",
+                                      "value": "_recipient"
+                                    },
+                                    "id": 1291,
+                                    "name": "Identifier",
+                                    "src": "1825:10:8"
+                                  }
+                                ],
+                                "id": 1292,
+                                "name": "IndexAccess",
+                                "src": "1805:31:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1285,
+                                  "type": "contract IERC20Token",
+                                  "value": "_targetToken"
+                                },
+                                "id": 1293,
+                                "name": "Identifier",
+                                "src": "1837:12:8"
+                              }
+                            ],
+                            "id": 1294,
+                            "name": "IndexAccess",
+                            "src": "1805:45:8"
+                          }
+                        ],
+                        "id": 1295,
+                        "name": "MemberAccess",
+                        "src": "1805:52:8"
+                      }
+                    ],
+                    "id": 1296,
+                    "name": "Return",
+                    "src": "1798:59:8"
+                  }
+                ],
+                "id": 1297,
+                "name": "Block",
+                "src": "1788:76:8"
+              }
+            ],
+            "id": 1298,
+            "name": "FunctionDefinition",
+            "src": "1688:176:8"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getLockupReleaseTimestamp",
+              "payable": false,
+              "scope": 1414,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 1315,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1299,
+                        "name": "ElementaryTypeName",
+                        "src": "1905:7:8"
+                      }
+                    ],
+                    "id": 1300,
+                    "name": "VariableDeclaration",
+                    "src": "1905:18:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1315,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1301,
+                        "name": "UserDefinedTypeName",
+                        "src": "1925:11:8"
+                      }
+                    ],
+                    "id": 1302,
+                    "name": "VariableDeclaration",
+                    "src": "1925:24:8"
+                  }
+                ],
+                "id": 1303,
+                "name": "ParameterList",
+                "src": "1904:46:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1315,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1304,
+                        "name": "ElementaryTypeName",
+                        "src": "1971:7:8"
+                      }
+                    ],
+                    "id": 1305,
+                    "name": "VariableDeclaration",
+                    "src": "1971:7:8"
+                  }
+                ],
+                "id": 1306,
+                "name": "ParameterList",
+                "src": "1970:9:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 1306
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "member_name": "releaseTimestamp",
+                          "referencedDeclaration": 1189,
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "type": "struct ITokenLocker.Lock storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "mapping(address => struct ITokenLocker.Lock storage ref)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1157,
+                                      "type": "mapping(address => mapping(address => struct ITokenLocker.Lock storage ref))",
+                                      "value": "accountLockedAmount"
+                                    },
+                                    "id": 1307,
+                                    "name": "Identifier",
+                                    "src": "1997:19:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1300,
+                                      "type": "address",
+                                      "value": "_recipient"
+                                    },
+                                    "id": 1308,
+                                    "name": "Identifier",
+                                    "src": "2017:10:8"
+                                  }
+                                ],
+                                "id": 1309,
+                                "name": "IndexAccess",
+                                "src": "1997:31:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1302,
+                                  "type": "contract IERC20Token",
+                                  "value": "_targetToken"
+                                },
+                                "id": 1310,
+                                "name": "Identifier",
+                                "src": "2029:12:8"
+                              }
+                            ],
+                            "id": 1311,
+                            "name": "IndexAccess",
+                            "src": "1997:45:8"
+                          }
+                        ],
+                        "id": 1312,
+                        "name": "MemberAccess",
+                        "src": "1997:62:8"
+                      }
+                    ],
+                    "id": 1313,
+                    "name": "Return",
+                    "src": "1990:69:8"
+                  }
+                ],
+                "id": 1314,
+                "name": "Block",
+                "src": "1980:86:8"
+              }
+            ],
+            "id": 1315,
+            "name": "FunctionDefinition",
+            "src": "1870:196:8"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "isConfirmed",
+              "payable": false,
+              "scope": 1414,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 1332,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1316,
+                        "name": "ElementaryTypeName",
+                        "src": "2093:7:8"
+                      }
+                    ],
+                    "id": 1317,
+                    "name": "VariableDeclaration",
+                    "src": "2093:18:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1332,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1318,
+                        "name": "UserDefinedTypeName",
+                        "src": "2113:11:8"
+                      }
+                    ],
+                    "id": 1319,
+                    "name": "VariableDeclaration",
+                    "src": "2113:24:8"
+                  }
+                ],
+                "id": 1320,
+                "name": "ParameterList",
+                "src": "2092:46:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1332,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 1321,
+                        "name": "ElementaryTypeName",
+                        "src": "2159:4:8"
+                      }
+                    ],
+                    "id": 1322,
+                    "name": "VariableDeclaration",
+                    "src": "2159:4:8"
+                  }
+                ],
+                "id": 1323,
+                "name": "ParameterList",
+                "src": "2158:6:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 1323
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "member_name": "confirmed",
+                          "referencedDeclaration": 1193,
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "type": "struct ITokenLocker.Lock storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "mapping(address => struct ITokenLocker.Lock storage ref)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1157,
+                                      "type": "mapping(address => mapping(address => struct ITokenLocker.Lock storage ref))",
+                                      "value": "accountLockedAmount"
+                                    },
+                                    "id": 1324,
+                                    "name": "Identifier",
+                                    "src": "2182:19:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1317,
+                                      "type": "address",
+                                      "value": "_recipient"
+                                    },
+                                    "id": 1325,
+                                    "name": "Identifier",
+                                    "src": "2202:10:8"
+                                  }
+                                ],
+                                "id": 1326,
+                                "name": "IndexAccess",
+                                "src": "2182:31:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1319,
+                                  "type": "contract IERC20Token",
+                                  "value": "_targetToken"
+                                },
+                                "id": 1327,
+                                "name": "Identifier",
+                                "src": "2214:12:8"
+                              }
+                            ],
+                            "id": 1328,
+                            "name": "IndexAccess",
+                            "src": "2182:45:8"
+                          }
+                        ],
+                        "id": 1329,
+                        "name": "MemberAccess",
+                        "src": "2182:55:8"
+                      }
+                    ],
+                    "id": 1330,
+                    "name": "Return",
+                    "src": "2175:62:8"
+                  }
+                ],
+                "id": 1331,
+                "name": "Block",
+                "src": "2165:79:8"
+              }
+            ],
+            "id": 1332,
+            "name": "FunctionDefinition",
+            "src": "2072:172:8"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "isCollected",
+              "payable": false,
+              "scope": 1414,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 1349,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1333,
+                        "name": "ElementaryTypeName",
+                        "src": "2271:7:8"
+                      }
+                    ],
+                    "id": 1334,
+                    "name": "VariableDeclaration",
+                    "src": "2271:18:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1349,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1335,
+                        "name": "UserDefinedTypeName",
+                        "src": "2291:11:8"
+                      }
+                    ],
+                    "id": 1336,
+                    "name": "VariableDeclaration",
+                    "src": "2291:24:8"
+                  }
+                ],
+                "id": 1337,
+                "name": "ParameterList",
+                "src": "2270:46:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1349,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 1338,
+                        "name": "ElementaryTypeName",
+                        "src": "2337:4:8"
+                      }
+                    ],
+                    "id": 1339,
+                    "name": "VariableDeclaration",
+                    "src": "2337:4:8"
+                  }
+                ],
+                "id": 1340,
+                "name": "ParameterList",
+                "src": "2336:6:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 1340
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "member_name": "collected",
+                          "referencedDeclaration": 1195,
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "type": "struct ITokenLocker.Lock storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "mapping(address => struct ITokenLocker.Lock storage ref)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1157,
+                                      "type": "mapping(address => mapping(address => struct ITokenLocker.Lock storage ref))",
+                                      "value": "accountLockedAmount"
+                                    },
+                                    "id": 1341,
+                                    "name": "Identifier",
+                                    "src": "2360:19:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1334,
+                                      "type": "address",
+                                      "value": "_recipient"
+                                    },
+                                    "id": 1342,
+                                    "name": "Identifier",
+                                    "src": "2380:10:8"
+                                  }
+                                ],
+                                "id": 1343,
+                                "name": "IndexAccess",
+                                "src": "2360:31:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1336,
+                                  "type": "contract IERC20Token",
+                                  "value": "_targetToken"
+                                },
+                                "id": 1344,
+                                "name": "Identifier",
+                                "src": "2392:12:8"
+                              }
+                            ],
+                            "id": 1345,
+                            "name": "IndexAccess",
+                            "src": "2360:45:8"
+                          }
+                        ],
+                        "id": 1346,
+                        "name": "MemberAccess",
+                        "src": "2360:55:8"
+                      }
+                    ],
+                    "id": 1347,
+                    "name": "Return",
+                    "src": "2353:62:8"
+                  }
+                ],
+                "id": 1348,
+                "name": "Block",
+                "src": "2343:79:8"
+              }
+            ],
+            "id": 1349,
+            "name": "FunctionDefinition",
+            "src": "2250:172:8"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "hasValue",
+              "payable": false,
+              "scope": 1414,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 1366,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1350,
+                        "name": "ElementaryTypeName",
+                        "src": "2446:7:8"
+                      }
+                    ],
+                    "id": 1351,
+                    "name": "VariableDeclaration",
+                    "src": "2446:18:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1366,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1352,
+                        "name": "UserDefinedTypeName",
+                        "src": "2466:11:8"
+                      }
+                    ],
+                    "id": 1353,
+                    "name": "VariableDeclaration",
+                    "src": "2466:24:8"
+                  }
+                ],
+                "id": 1354,
+                "name": "ParameterList",
+                "src": "2445:46:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1366,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 1355,
+                        "name": "ElementaryTypeName",
+                        "src": "2512:4:8"
+                      }
+                    ],
+                    "id": 1356,
+                    "name": "VariableDeclaration",
+                    "src": "2512:4:8"
+                  }
+                ],
+                "id": 1357,
+                "name": "ParameterList",
+                "src": "2511:6:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 1357
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "member_name": "hasValue",
+                          "referencedDeclaration": 1197,
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "type": "struct ITokenLocker.Lock storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "mapping(address => struct ITokenLocker.Lock storage ref)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1157,
+                                      "type": "mapping(address => mapping(address => struct ITokenLocker.Lock storage ref))",
+                                      "value": "accountLockedAmount"
+                                    },
+                                    "id": 1358,
+                                    "name": "Identifier",
+                                    "src": "2535:19:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1351,
+                                      "type": "address",
+                                      "value": "_recipient"
+                                    },
+                                    "id": 1359,
+                                    "name": "Identifier",
+                                    "src": "2555:10:8"
+                                  }
+                                ],
+                                "id": 1360,
+                                "name": "IndexAccess",
+                                "src": "2535:31:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1353,
+                                  "type": "contract IERC20Token",
+                                  "value": "_targetToken"
+                                },
+                                "id": 1361,
+                                "name": "Identifier",
+                                "src": "2567:12:8"
+                              }
+                            ],
+                            "id": 1362,
+                            "name": "IndexAccess",
+                            "src": "2535:45:8"
+                          }
+                        ],
+                        "id": 1363,
+                        "name": "MemberAccess",
+                        "src": "2535:54:8"
+                      }
+                    ],
+                    "id": 1364,
+                    "name": "Return",
+                    "src": "2528:61:8"
+                  }
+                ],
+                "id": 1365,
+                "name": "Block",
+                "src": "2518:78:8"
+              }
+            ],
+            "id": 1366,
+            "name": "FunctionDefinition",
+            "src": "2428:168:8"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "isReleaseTime",
+              "payable": false,
+              "scope": 1414,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 1385,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1367,
+                        "name": "ElementaryTypeName",
+                        "src": "2625:7:8"
+                      }
+                    ],
+                    "id": 1368,
+                    "name": "VariableDeclaration",
+                    "src": "2625:18:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1385,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1369,
+                        "name": "UserDefinedTypeName",
+                        "src": "2645:11:8"
+                      }
+                    ],
+                    "id": 1370,
+                    "name": "VariableDeclaration",
+                    "src": "2645:24:8"
+                  }
+                ],
+                "id": 1371,
+                "name": "ParameterList",
+                "src": "2624:46:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1385,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 1372,
+                        "name": "ElementaryTypeName",
+                        "src": "2691:4:8"
+                      }
+                    ],
+                    "id": 1373,
+                    "name": "VariableDeclaration",
+                    "src": "2691:4:8"
+                  }
+                ],
+                "id": 1374,
+                "name": "ParameterList",
+                "src": "2690:6:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 1374
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "<=",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "releaseTimestamp",
+                              "referencedDeclaration": 1189,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "struct ITokenLocker.Lock storage ref"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "type": "mapping(address => struct ITokenLocker.Lock storage ref)"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 1157,
+                                          "type": "mapping(address => mapping(address => struct ITokenLocker.Lock storage ref))",
+                                          "value": "accountLockedAmount"
+                                        },
+                                        "id": 1375,
+                                        "name": "Identifier",
+                                        "src": "2714:19:8"
+                                      },
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 1368,
+                                          "type": "address",
+                                          "value": "_recipient"
+                                        },
+                                        "id": 1376,
+                                        "name": "Identifier",
+                                        "src": "2734:10:8"
+                                      }
+                                    ],
+                                    "id": 1377,
+                                    "name": "IndexAccess",
+                                    "src": "2714:31:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1370,
+                                      "type": "contract IERC20Token",
+                                      "value": "_targetToken"
+                                    },
+                                    "id": 1378,
+                                    "name": "Identifier",
+                                    "src": "2746:12:8"
+                                  }
+                                ],
+                                "id": 1379,
+                                "name": "IndexAccess",
+                                "src": "2714:45:8"
+                              }
+                            ],
+                            "id": 1380,
+                            "name": "MemberAccess",
+                            "src": "2714:62:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1683,
+                              "type": "uint256",
+                              "value": "now"
+                            },
+                            "id": 1381,
+                            "name": "Identifier",
+                            "src": "2780:3:8"
+                          }
+                        ],
+                        "id": 1382,
+                        "name": "BinaryOperation",
+                        "src": "2714:69:8"
+                      }
+                    ],
+                    "id": 1383,
+                    "name": "Return",
+                    "src": "2707:76:8"
+                  }
+                ],
+                "id": 1384,
+                "name": "Block",
+                "src": "2697:93:8"
+              }
+            ],
+            "id": 1385,
+            "name": "FunctionDefinition",
+            "src": "2602:188:8"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "checkAllowance",
+              "payable": false,
+              "scope": 1414,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_targetToken",
+                      "scope": 1413,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 1075,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 1386,
+                        "name": "UserDefinedTypeName",
+                        "src": "2820:11:8"
+                      }
+                    ],
+                    "id": 1387,
+                    "name": "VariableDeclaration",
+                    "src": "2820:24:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_owner",
+                      "scope": 1413,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1388,
+                        "name": "ElementaryTypeName",
+                        "src": "2846:7:8"
+                      }
+                    ],
+                    "id": 1389,
+                    "name": "VariableDeclaration",
+                    "src": "2846:14:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_spender",
+                      "scope": 1413,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1390,
+                        "name": "ElementaryTypeName",
+                        "src": "2862:7:8"
+                      }
+                    ],
+                    "id": 1391,
+                    "name": "VariableDeclaration",
+                    "src": "2862:16:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_amount",
+                      "scope": 1413,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1392,
+                        "name": "ElementaryTypeName",
+                        "src": "2880:7:8"
+                      }
+                    ],
+                    "id": 1393,
+                    "name": "VariableDeclaration",
+                    "src": "2880:15:8"
+                  }
+                ],
+                "id": 1394,
+                "name": "ParameterList",
+                "src": "2819:77:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1413,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 1395,
+                        "name": "ElementaryTypeName",
+                        "src": "2917:4:8"
+                      }
+                    ],
+                    "id": 1396,
+                    "name": "VariableDeclaration",
+                    "src": "2917:4:8"
+                  }
+                ],
+                "id": 1397,
+                "name": "ParameterList",
+                "src": "2916:6:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 1397
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": ">=",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "uint256",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "allowance",
+                                  "referencedDeclaration": 1045,
+                                  "type": "function (address,address) pure external returns (uint256)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1387,
+                                      "type": "contract IERC20Token",
+                                      "value": "_targetToken"
+                                    },
+                                    "id": 1398,
+                                    "name": "Identifier",
+                                    "src": "2940:12:8"
+                                  }
+                                ],
+                                "id": 1399,
+                                "name": "MemberAccess",
+                                "src": "2940:22:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1389,
+                                  "type": "address",
+                                  "value": "_owner"
+                                },
+                                "id": 1400,
+                                "name": "Identifier",
+                                "src": "2963:6:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1391,
+                                  "type": "address",
+                                  "value": "_spender"
+                                },
+                                "id": 1401,
+                                "name": "Identifier",
+                                "src": "2971:8:8"
+                              }
+                            ],
+                            "id": 1402,
+                            "name": "FunctionCall",
+                            "src": "2940:40:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "uint256",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1618,
+                                  "type": "function (uint256,uint256) pure returns (uint256)",
+                                  "value": "safeAdd"
+                                },
+                                "id": 1403,
+                                "name": "Identifier",
+                                "src": "2984:7:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1393,
+                                  "type": "uint256",
+                                  "value": "_amount"
+                                },
+                                "id": 1404,
+                                "name": "Identifier",
+                                "src": "2992:7:8"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "type": "uint256",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_uint256",
+                                          "typeString": "uint256"
+                                        },
+                                        {
+                                          "typeIdentifier": "t_uint256",
+                                          "typeString": "uint256"
+                                        }
+                                      ],
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1618,
+                                      "type": "function (uint256,uint256) pure returns (uint256)",
+                                      "value": "safeAdd"
+                                    },
+                                    "id": 1405,
+                                    "name": "Identifier",
+                                    "src": "3001:7:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1148,
+                                      "type": "uint256",
+                                      "value": "pendingLocked"
+                                    },
+                                    "id": 1406,
+                                    "name": "Identifier",
+                                    "src": "3009:13:8"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1151,
+                                      "type": "uint256",
+                                      "value": "confirmedLocked"
+                                    },
+                                    "id": 1407,
+                                    "name": "Identifier",
+                                    "src": "3024:15:8"
+                                  }
+                                ],
+                                "id": 1408,
+                                "name": "FunctionCall",
+                                "src": "3001:39:8"
+                              }
+                            ],
+                            "id": 1409,
+                            "name": "FunctionCall",
+                            "src": "2984:57:8"
+                          }
+                        ],
+                        "id": 1410,
+                        "name": "BinaryOperation",
+                        "src": "2940:101:8"
+                      }
+                    ],
+                    "id": 1411,
+                    "name": "Return",
+                    "src": "2933:108:8"
+                  }
+                ],
+                "id": 1412,
+                "name": "Block",
+                "src": "2923:125:8"
+              }
+            ],
+            "id": 1413,
+            "name": "FunctionDefinition",
+            "src": "2796:252:8"
+          }
+        ],
+        "id": 1414,
+        "name": "ContractDefinition",
+        "src": "106:2945:8"
+      }
+    ],
+    "id": 1415,
+    "name": "SourceUnit",
+    "src": "0:3051:8"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-02-02T11:15:18.182Z"
+}
