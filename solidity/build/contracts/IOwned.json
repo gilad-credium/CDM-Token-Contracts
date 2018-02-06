@@ -2,6 +2,15 @@
   "contractName": "IOwned",
   "abi": [
     {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "constant": true,
       "inputs": [],
       "name": "owner",
@@ -28,29 +37,20 @@
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [],
-      "name": "acceptOwnership",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
     }
   ],
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity ^0.4.11;\n\n/*\n    forked from https://github.com/bancorprotocol/contracts\n    Owned contract interface\n*/\ncontract IOwned {\n    // this function isn't abstract since the compiler emits automatically generated getter functions as external\n    function owner() public pure returns (address) {}\n\n    function transferOwnership(address _newOwner) public;\n    function acceptOwnership() public;\n}",
-  "sourcePath": "/home/taras/Workspace/vscode/cdm-token/solidity/contracts/interfaces/IOwned.sol",
+  "source": "pragma solidity ^0.4.11;\n\n/**\n*    forked from https://github.com/bancorprotocol/contracts\n*    Owned contract interface\n*/\ncontract IOwned {\n    function owner() public pure returns (address) {}\n\n    function transferOwnership(address _newOwner) public;\n    function acceptOwnership() public;\n}",
+  "sourcePath": "/home/therasymchuk/Workspace/github/CDM-Token-Contracts/solidity/contracts/interfaces/IOwned.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/home/taras/Workspace/vscode/cdm-token/solidity/contracts/interfaces/IOwned.sol",
+      "absolutePath": "/home/therasymchuk/Workspace/github/CDM-Token-Contracts/solidity/contracts/interfaces/IOwned.sol",
       "exportedSymbols": {
         "IOwned": [
-          311
+          472
         ]
       }
     },
@@ -64,7 +64,7 @@
             ".11"
           ]
         },
-        "id": 296,
+        "id": 457,
         "name": "PragmaDirective",
         "src": "0:24:2"
       },
@@ -77,13 +77,13 @@
             null
           ],
           "contractKind": "contract",
-          "documentation": null,
+          "documentation": "   forked from https://github.com/bancorprotocol/contracts\n   Owned contract interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            311
+            472
           ],
           "name": "IOwned",
-          "scope": 312
+          "scope": 473
         },
         "children": [
           {
@@ -96,7 +96,7 @@
               ],
               "name": "owner",
               "payable": false,
-              "scope": 311,
+              "scope": 472,
               "stateMutability": "pure",
               "superFunction": null,
               "visibility": "public"
@@ -109,9 +109,9 @@
                   ]
                 },
                 "children": [],
-                "id": 297,
+                "id": 458,
                 "name": "ParameterList",
-                "src": "271:2:2"
+                "src": "160:2:2"
               },
               {
                 "children": [
@@ -119,7 +119,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 302,
+                      "scope": 463,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -132,19 +132,19 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 298,
+                        "id": 459,
                         "name": "ElementaryTypeName",
-                        "src": "295:7:2"
+                        "src": "184:7:2"
                       }
                     ],
-                    "id": 299,
+                    "id": 460,
                     "name": "VariableDeclaration",
-                    "src": "295:7:2"
+                    "src": "184:7:2"
                   }
                 ],
-                "id": 300,
+                "id": 461,
                 "name": "ParameterList",
-                "src": "294:9:2"
+                "src": "183:9:2"
               },
               {
                 "attributes": {
@@ -153,14 +153,14 @@
                   ]
                 },
                 "children": [],
-                "id": 301,
+                "id": 462,
                 "name": "Block",
-                "src": "304:2:2"
+                "src": "193:2:2"
               }
             ],
-            "id": 302,
+            "id": 463,
             "name": "FunctionDefinition",
-            "src": "257:49:2"
+            "src": "146:49:2"
           },
           {
             "attributes": {
@@ -173,7 +173,7 @@
               ],
               "name": "transferOwnership",
               "payable": false,
-              "scope": 311,
+              "scope": 472,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -185,7 +185,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_newOwner",
-                      "scope": 307,
+                      "scope": 468,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -198,19 +198,19 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 303,
+                        "id": 464,
                         "name": "ElementaryTypeName",
-                        "src": "339:7:2"
+                        "src": "228:7:2"
                       }
                     ],
-                    "id": 304,
+                    "id": 465,
                     "name": "VariableDeclaration",
-                    "src": "339:17:2"
+                    "src": "228:17:2"
                   }
                 ],
-                "id": 305,
+                "id": 466,
                 "name": "ParameterList",
-                "src": "338:19:2"
+                "src": "227:19:2"
               },
               {
                 "attributes": {
@@ -219,14 +219,14 @@
                   ]
                 },
                 "children": [],
-                "id": 306,
+                "id": 467,
                 "name": "ParameterList",
-                "src": "364:0:2"
+                "src": "253:0:2"
               }
             ],
-            "id": 307,
+            "id": 468,
             "name": "FunctionDefinition",
-            "src": "312:53:2"
+            "src": "201:53:2"
           },
           {
             "attributes": {
@@ -239,7 +239,7 @@
               ],
               "name": "acceptOwnership",
               "payable": false,
-              "scope": 311,
+              "scope": 472,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -252,9 +252,9 @@
                   ]
                 },
                 "children": [],
-                "id": 308,
+                "id": 469,
                 "name": "ParameterList",
-                "src": "394:2:2"
+                "src": "283:2:2"
               },
               {
                 "attributes": {
@@ -263,30 +263,30 @@
                   ]
                 },
                 "children": [],
-                "id": 309,
+                "id": 470,
                 "name": "ParameterList",
-                "src": "403:0:2"
+                "src": "292:0:2"
               }
             ],
-            "id": 310,
+            "id": 471,
             "name": "FunctionDefinition",
-            "src": "370:34:2"
+            "src": "259:34:2"
           }
         ],
-        "id": 311,
+        "id": 472,
         "name": "ContractDefinition",
-        "src": "121:285:2"
+        "src": "124:171:2"
       }
     ],
-    "id": 312,
+    "id": 473,
     "name": "SourceUnit",
-    "src": "0:406:2"
+    "src": "0:295:2"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-02T11:37:38.153Z"
+  "updatedAt": "2018-02-06T15:01:27.364Z"
 }

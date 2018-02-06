@@ -42,7 +42,7 @@ contract CrediumToken is ISmartToken, Owned, TokenHolder {
     }
 
     modifier transfersAllowed {
-        assert(transfersEnabled);
+        require(transfersEnabled);
         _;
     }
 
@@ -102,8 +102,8 @@ contract CrediumToken is ISmartToken, Owned, TokenHolder {
      * @param _to The address of the recipient
      * @param _value the amount to send
      */
-    function transfer(address _to, uint256 _value)
-        public
+    function transfer(address _to, uint256 _value) public
+        transfersAllowed
         validAddress(_to)
         returns (bool success)
     {
@@ -120,8 +120,8 @@ contract CrediumToken is ISmartToken, Owned, TokenHolder {
      * @param _to The address of the recipient
      * @param _value the amount to send
      */
-    function transferFrom(address _from, address _to, uint256 _value)
-        public
+    function transferFrom(address _from, address _to, uint256 _value) public
+        transfersAllowed
         validAddress(_from)
         validAddress(_to)
         returns (bool success)
@@ -154,8 +154,7 @@ contract CrediumToken is ISmartToken, Owned, TokenHolder {
      *
      * @return true if the approval was successful, false if it wasn't
      */
-    function approve(address _spender, uint256 _value)
-        public
+    function approve(address _spender, uint256 _value) public
         validAddress(_spender)
         returns (bool success)
     {
