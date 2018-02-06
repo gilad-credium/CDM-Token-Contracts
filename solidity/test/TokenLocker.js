@@ -312,4 +312,59 @@ contract("TokenLocker", (accounts) => {
 
     });
 
+    describe("redeem", async () => {
+        beforeEach(async () => {
+            await tokenLocker.lockup(accounts[1], token.address, amount, timestamp);
+        });
+
+        it("should throw if called by a non-owner", async () => {
+            try {
+                let nonOwnerAccount = accounts[2];
+                assert.notEqual(await tokenLocker.owner.call(), nonOwnerAccount)
+                await tokenLocker.redeem(token.address, { from: nonOwnerAccount }); 
+                assert(false, "no error. something went wrong");
+            } catch (error) {
+                let stacktrace = error.toString();
+                return assert(verifyException(stacktrace), stacktrace);
+            }
+        });
+
+        it("should throw if pendingLocked != 0", async () => {
+            try {
+                assert.isAbove(await tokenLocker.pendingLocked.call(), 0);
+                await tokenLocker.redeem(token.address, { from: accounts[0] }); 
+                assert(false, "no error. something went wrong");
+            } catch (error) {
+                let stacktrace = error.toString();
+                return assert(verifyException(stacktrace), stacktrace);
+            }
+        });
+
+        it("should throw if confirmedLocked != 0", async () => {
+            try {
+                await tokenLocker.confirm(token.address, { from: accounts[1] });
+                assert.isAbove(await tokenLocker.confirmedLocked.call(), 0);
+                await tokenLocker.redeem(token.address, { from: accounts[0] }); 
+                assert(false, "no error. something went wrong");
+            } catch (error) {
+                let stacktrace = error.toString();
+                return assert(verifyException(stacktrace), stacktrace);
+            }
+        });
+
+        it("should set lockupEnabled to false", async () => {
+            await tokenLocker.cancel(accounts[1], token.address, { from: accounts[0] });
+            await tokenLocker.redeem(token.address, { from: accounts[0] });
+            assert.isFalse(await tokenLocker.lockupEnabled.call());
+        });
+
+        it("should set tockenLocker token balance to 0", async () => {
+            assert.isAbove(await token.balanceOf(tokenLocker.address), 0);
+            await tokenLocker.cancel(accounts[1], token.address, { from: accounts[0] });
+            await tokenLocker.redeem(token.address, { from: accounts[0] });
+            assert.equal(await token.balanceOf(tokenLocker.address), 0);
+        });
+
+    });
+
 });
