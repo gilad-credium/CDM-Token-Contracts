@@ -153,17 +153,6 @@ contract("TokenLocker", (accounts) => {
             }
         });
 
-        it("should throw if an owner tries to cancel a confirmed lockup", async () => {
-            try {
-                await tokenLocker.confirm(token.address, { from: accounts[1] });
-                await tokenLocker.cancel(accounts[1], token.address);
-                assert(false, "no error. something went wrong");
-            } catch (error) {
-                let stacktrace = error.toString();
-                return assert(verifyException(stacktrace), stacktrace);
-            }
-        });
-
         it("should throw if an owner tries to cancel a collected lockup", async () => {
             try {
                 await tokenLocker.confirm(token.address, { from: accounts[1] });
@@ -186,12 +175,21 @@ contract("TokenLocker", (accounts) => {
             }
         });
 
-        it("should decrease pendingLocked by an amount after cancel call", async () => {
+        it("should decrease pendingLocked by an amount after cancel call if lockup is not confirmed", async () => {
             let ownableAmount = await tokenLocker.getLockupAmount.call(accounts[1], token.address);
             assert.equal(ownableAmount, amount);
             assert.equal(await tokenLocker.pendingLocked.call(), amount);
             await tokenLocker.cancel(accounts[1], token.address);
             assert.equal(await tokenLocker.pendingLocked.call(), amount - ownableAmount);
+        });
+
+        it("should decrease confirmedLocked by an amount after cancel call if lockup is confirmed", async () => {
+            await tokenLocker.confirm(token.address, { from: accounts[1] });
+            assert.isTrue(await tokenLocker.isConfirmed.call(accounts[1], token.address));
+            let ownableAmount = await tokenLocker.getLockupAmount.call(accounts[1], token.address);
+            assert.equal(await tokenLocker.confirmedLocked.call(), amount);
+            await tokenLocker.cancel(accounts[1], token.address);
+            assert.equal(await tokenLocker.confirmedLocked.call(), amount - ownableAmount);
         });
 
         it("should wipe Lock object for the particular `_recipient -> _targetToken` pair", async () => {
