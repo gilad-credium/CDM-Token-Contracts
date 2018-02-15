@@ -2,15 +2,6 @@
   "contractName": "IOwned",
   "abi": [
     {
-      "constant": false,
-      "inputs": [],
-      "name": "acceptOwnership",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "constant": true,
       "inputs": [],
       "name": "owner",
@@ -37,6 +28,15 @@
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
   "bytecode": "0x",
@@ -44,13 +44,13 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.11;\n\n/**\n*    forked from https://github.com/bancorprotocol/contracts\n*    Owned contract interface\n*/\ncontract IOwned {\n    function owner() public pure returns (address) {}\n\n    function transferOwnership(address _newOwner) public;\n    function acceptOwnership() public;\n}",
-  "sourcePath": "/home/therasymchuk/Workspace/github/CDM-Token-Contracts/solidity/contracts/interfaces/IOwned.sol",
+  "sourcePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/interfaces/IOwned.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/home/therasymchuk/Workspace/github/CDM-Token-Contracts/solidity/contracts/interfaces/IOwned.sol",
+      "absolutePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/interfaces/IOwned.sol",
       "exportedSymbols": {
         "IOwned": [
-          472
+          249
         ]
       }
     },
@@ -64,9 +64,9 @@
             ".11"
           ]
         },
-        "id": 457,
+        "id": 234,
         "name": "PragmaDirective",
-        "src": "0:24:2"
+        "src": "0:24:3"
       },
       {
         "attributes": {
@@ -80,10 +80,10 @@
           "documentation": "   forked from https://github.com/bancorprotocol/contracts\n   Owned contract interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            472
+            249
           ],
           "name": "IOwned",
-          "scope": 473
+          "scope": 250
         },
         "children": [
           {
@@ -96,7 +96,7 @@
               ],
               "name": "owner",
               "payable": false,
-              "scope": 472,
+              "scope": 249,
               "stateMutability": "pure",
               "superFunction": null,
               "visibility": "public"
@@ -109,9 +109,9 @@
                   ]
                 },
                 "children": [],
-                "id": 458,
+                "id": 235,
                 "name": "ParameterList",
-                "src": "160:2:2"
+                "src": "160:2:3"
               },
               {
                 "children": [
@@ -119,7 +119,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 463,
+                      "scope": 240,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -132,19 +132,19 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 459,
+                        "id": 236,
                         "name": "ElementaryTypeName",
-                        "src": "184:7:2"
+                        "src": "184:7:3"
                       }
                     ],
-                    "id": 460,
+                    "id": 237,
                     "name": "VariableDeclaration",
-                    "src": "184:7:2"
+                    "src": "184:7:3"
                   }
                 ],
-                "id": 461,
+                "id": 238,
                 "name": "ParameterList",
-                "src": "183:9:2"
+                "src": "183:9:3"
               },
               {
                 "attributes": {
@@ -153,14 +153,14 @@
                   ]
                 },
                 "children": [],
-                "id": 462,
+                "id": 239,
                 "name": "Block",
-                "src": "193:2:2"
+                "src": "193:2:3"
               }
             ],
-            "id": 463,
+            "id": 240,
             "name": "FunctionDefinition",
-            "src": "146:49:2"
+            "src": "146:49:3"
           },
           {
             "attributes": {
@@ -173,7 +173,7 @@
               ],
               "name": "transferOwnership",
               "payable": false,
-              "scope": 472,
+              "scope": 249,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -185,7 +185,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_newOwner",
-                      "scope": 468,
+                      "scope": 245,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -198,19 +198,19 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 464,
+                        "id": 241,
                         "name": "ElementaryTypeName",
-                        "src": "228:7:2"
+                        "src": "228:7:3"
                       }
                     ],
-                    "id": 465,
+                    "id": 242,
                     "name": "VariableDeclaration",
-                    "src": "228:17:2"
+                    "src": "228:17:3"
                   }
                 ],
-                "id": 466,
+                "id": 243,
                 "name": "ParameterList",
-                "src": "227:19:2"
+                "src": "227:19:3"
               },
               {
                 "attributes": {
@@ -219,14 +219,14 @@
                   ]
                 },
                 "children": [],
-                "id": 467,
+                "id": 244,
                 "name": "ParameterList",
-                "src": "253:0:2"
+                "src": "253:0:3"
               }
             ],
-            "id": 468,
+            "id": 245,
             "name": "FunctionDefinition",
-            "src": "201:53:2"
+            "src": "201:53:3"
           },
           {
             "attributes": {
@@ -239,7 +239,7 @@
               ],
               "name": "acceptOwnership",
               "payable": false,
-              "scope": 472,
+              "scope": 249,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -252,9 +252,9 @@
                   ]
                 },
                 "children": [],
-                "id": 469,
+                "id": 246,
                 "name": "ParameterList",
-                "src": "283:2:2"
+                "src": "283:2:3"
               },
               {
                 "attributes": {
@@ -263,30 +263,30 @@
                   ]
                 },
                 "children": [],
-                "id": 470,
+                "id": 247,
                 "name": "ParameterList",
-                "src": "292:0:2"
+                "src": "292:0:3"
               }
             ],
-            "id": 471,
+            "id": 248,
             "name": "FunctionDefinition",
-            "src": "259:34:2"
+            "src": "259:34:3"
           }
         ],
-        "id": 472,
+        "id": 249,
         "name": "ContractDefinition",
-        "src": "124:171:2"
+        "src": "124:171:3"
       }
     ],
-    "id": 473,
+    "id": 250,
     "name": "SourceUnit",
-    "src": "0:295:2"
+    "src": "0:295:3"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-06T15:01:27.364Z"
+  "updatedAt": "2018-02-15T18:24:06.974Z"
 }

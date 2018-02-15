@@ -3,6 +3,7 @@ pragma solidity ^0.4.11;
 import "./interfaces/ITokenLocker.sol";
 import "./interfaces/IERC20Token.sol";
 import "./util/Owned.sol";
+import "./MultisigWalletAdapter.sol";
 
 /**
 *   TokenLocker contract allows to keep a promise 
@@ -12,8 +13,9 @@ contract TokenLocker is ITokenLocker {
 
     mapping(address => address) public tokenOwners;
 
-    function TokenLocker() public {
+    function TokenLocker(MultisigWalletAdapter _multisigWalletAdapter) public {
         lockupEnabled = true;
+        multisigWalletAdapter = _multisigWalletAdapter;
     }
 
     function lockup(address _recipient, IERC20Token _targetToken, uint256 _amount, uint256 _releaseTimestamp) public 
@@ -25,7 +27,6 @@ contract TokenLocker is ITokenLocker {
         validAddress(_recipient)
         returns(bool) 
     {
-        require(_amount > 0);
         if (accountLockedAmount[_recipient][_targetToken].hasValue) {
             Lock storage lock = accountLockedAmount[_recipient][_targetToken];
             uint256 sum = safeAdd(lock.amount, _amount);
@@ -36,10 +37,13 @@ contract TokenLocker is ITokenLocker {
 
             lock.amount = sum;
         } else {
-            require(_releaseTimestamp > now);
-            require(super.checkAllowance(_targetToken, msg.sender, address(this), _amount));
+            // TODO
+            // require(_releaseTimestamp > now);
+            // require(super.checkAllowance(_targetToken, msg.sender, address(this), _amount));
 
-            assert(_targetToken.transferFrom(msg.sender, address(this), _amount));
+            // assert(_targetToken.transferFrom(msg.sender, address(this), _amount));
+
+            multisigWalletAdapter.delegateTransfer(_targetToken, _recipient, _amount);
 
             accountLockedAmount[_recipient][_targetToken] = Lock(_releaseTimestamp, _amount, false, false, true);
         }

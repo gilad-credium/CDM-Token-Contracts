@@ -1,0 +1,2003 @@
+{
+  "contractName": "MultisigWalletAdapter",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "multisigWallet",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "newOwner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_multisigWallet",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "_transactionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "SendMultisigTransaction",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "_transactionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "ConfirmMultisigTransaction",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "_transactionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "RevokeMultisigTransaction",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "_prevOwner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnerUpdate",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "delegateTransfer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_transactionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "confirmMultisigTransaction",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_transactionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "revokeMultisigConfirmation",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b604051602080610fc683398101604052808051906020019091905050336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555080600260006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050610f0a806100bc6000396000f30060606040526004361061008e576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680632b2593ba1461009357806379ba5097146100b65780637a6a6539146100cb5780638da5cb5b146100ee5780639075becf14610143578063d4ee1d9014610198578063f2fde38b146101ed578063f4b79da514610226575b600080fd5b341561009e57600080fd5b6100b4600480803590602001909190505061029b565b005b34156100c157600080fd5b6100c96103d1565b005b34156100d657600080fd5b6100ec60048080359060200190919050506105ad565b005b34156100f957600080fd5b6101016106e3565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561014e57600080fd5b610156610708565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156101a357600080fd5b6101ab61072e565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156101f857600080fd5b610224600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610754565b005b341561023157600080fd5b610285600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff169060200190919080359060200190919050506108b1565b6040518082815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156102f357fe5b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663c01a8c84826040518263ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180828152602001915050600060405180830381600087803b151561038357600080fd5b6102c65a03f1151561039457600080fd5b5050507fb29045bb3a98699559cf1045ab75a38ffd8711c8749453bb7fb5f37436523b66816040518082815260200191505060405180910390a150565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561042d57600080fd5b7f343765429aea5a34b3ff6a3785a98a5abb2597aca87bfbb58632c173d585373a6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019250505060405180910390a1600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff166000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506000600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561060557fe5b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166320ea8d86826040518263ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180828152602001915050600060405180830381600087803b151561069557600080fd5b6102c65a03f115156106a657600080fd5b5050507fc9f8c35b8c64c1e12c8c491cd261a85858962f67e5f51718ceca5fa40cc651df816040518082815260200191505060405180910390a150565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156107ac57fe5b8060008173ffffffffffffffffffffffffffffffffffffffff16141515156107d357600080fd5b813073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561080f57600080fd5b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168373ffffffffffffffffffffffffffffffffffffffff161415151561086b57600080fd5b82600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505050565b6000806108bc610eca565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561091657fe5b8673ffffffffffffffffffffffffffffffffffffffff1663313ce5676000604051602001526040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b151561098257600080fd5b6102c65a03f1151561099357600080fd5b50505060405180519050600a0a60ff16850292506109b18684610b85565b9150600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663c6427474886000856000604051602001526040518463ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200183815260200180602001828103825283818151815260200191508051906020019080838360005b83811015610aa1578082015181840152602081019050610a86565b50505050905090810190601f168015610ace5780820380516001836020036101000a031916815260200191505b50945050505050602060405180830381600087803b1515610aee57600080fd5b6102c65a03f11515610aff57600080fd5b5050506040518051905090508573ffffffffffffffffffffffffffffffffffffffff168773ffffffffffffffffffffffffffffffffffffffff167ff1598bc08ef3b45aafae44a7873ced35c1b8f78f1a63311e1330b99d2754c9f38784604051808381526020018281526020019250505060405180910390a38093505050509392505050565b610b8d610eca565b600080610b98610eca565b6000806000610ba5610eca565b60008060008060405180807f7472616e7366657228616464726573732c75696e743235362900000000000000815250601901905060405180910390209a50600460ff169950610bf38e610e92565b9850600c89510197508c6001029650602060ff16955085888b0101604051805910610c1b5750595b9080825280601f01601f19166020018201604052509450600093505b6004841015610cbc578a84600481101515610c4e57fe5b1a7f0100000000000000000000000000000000000000000000000000000000000000028585815181101515610c7f57fe5b9060200101907effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916908160001a9053508380600101945050610c37565b600092505b600c831015610d3c5760007f0100000000000000000000000000000000000000000000000000000000000000028584600401815181101515610cff57fe5b9060200101907effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916908160001a9053508280600101935050610cc1565b600091505b6014821015610df1578882815181101515610d5857fe5b9060200101517f010000000000000000000000000000000000000000000000000000000000000090047f0100000000000000000000000000000000000000000000000000000000000000028583601001815181101515610db457fe5b9060200101907effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916908160001a9053508180600101925050610d41565b600090505b6020811015610e7e578681602081101515610e0d57fe5b1a7f0100000000000000000000000000000000000000000000000000000000000000028582602401815181101515610e4157fe5b9060200101907effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916908160001a9053508080600101915050610df6565b849b50505050505050505050505092915050565b610e9a610eca565b60405182741400000000000000000000000000000000000000001860148201526034810160405280915050919050565b6020604051908101604052806000815250905600a165627a7a72305820ac10632eb99fef8b710ae0b152cd7dfeb6c1a9f56db59f2e0114150e05f2abc60029",
+  "deployedBytecode": "0x60606040526004361061008e576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680632b2593ba1461009357806379ba5097146100b65780637a6a6539146100cb5780638da5cb5b146100ee5780639075becf14610143578063d4ee1d9014610198578063f2fde38b146101ed578063f4b79da514610226575b600080fd5b341561009e57600080fd5b6100b4600480803590602001909190505061029b565b005b34156100c157600080fd5b6100c96103d1565b005b34156100d657600080fd5b6100ec60048080359060200190919050506105ad565b005b34156100f957600080fd5b6101016106e3565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561014e57600080fd5b610156610708565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156101a357600080fd5b6101ab61072e565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156101f857600080fd5b610224600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610754565b005b341561023157600080fd5b610285600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff169060200190919080359060200190919050506108b1565b6040518082815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156102f357fe5b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663c01a8c84826040518263ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180828152602001915050600060405180830381600087803b151561038357600080fd5b6102c65a03f1151561039457600080fd5b5050507fb29045bb3a98699559cf1045ab75a38ffd8711c8749453bb7fb5f37436523b66816040518082815260200191505060405180910390a150565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561042d57600080fd5b7f343765429aea5a34b3ff6a3785a98a5abb2597aca87bfbb58632c173d585373a6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019250505060405180910390a1600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff166000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506000600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561060557fe5b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166320ea8d86826040518263ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180828152602001915050600060405180830381600087803b151561069557600080fd5b6102c65a03f115156106a657600080fd5b5050507fc9f8c35b8c64c1e12c8c491cd261a85858962f67e5f51718ceca5fa40cc651df816040518082815260200191505060405180910390a150565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156107ac57fe5b8060008173ffffffffffffffffffffffffffffffffffffffff16141515156107d357600080fd5b813073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561080f57600080fd5b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168373ffffffffffffffffffffffffffffffffffffffff161415151561086b57600080fd5b82600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505050565b6000806108bc610eca565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561091657fe5b8673ffffffffffffffffffffffffffffffffffffffff1663313ce5676000604051602001526040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b151561098257600080fd5b6102c65a03f1151561099357600080fd5b50505060405180519050600a0a60ff16850292506109b18684610b85565b9150600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663c6427474886000856000604051602001526040518463ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200183815260200180602001828103825283818151815260200191508051906020019080838360005b83811015610aa1578082015181840152602081019050610a86565b50505050905090810190601f168015610ace5780820380516001836020036101000a031916815260200191505b50945050505050602060405180830381600087803b1515610aee57600080fd5b6102c65a03f11515610aff57600080fd5b5050506040518051905090508573ffffffffffffffffffffffffffffffffffffffff168773ffffffffffffffffffffffffffffffffffffffff167ff1598bc08ef3b45aafae44a7873ced35c1b8f78f1a63311e1330b99d2754c9f38784604051808381526020018281526020019250505060405180910390a38093505050509392505050565b610b8d610eca565b600080610b98610eca565b6000806000610ba5610eca565b60008060008060405180807f7472616e7366657228616464726573732c75696e743235362900000000000000815250601901905060405180910390209a50600460ff169950610bf38e610e92565b9850600c89510197508c6001029650602060ff16955085888b0101604051805910610c1b5750595b9080825280601f01601f19166020018201604052509450600093505b6004841015610cbc578a84600481101515610c4e57fe5b1a7f0100000000000000000000000000000000000000000000000000000000000000028585815181101515610c7f57fe5b9060200101907effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916908160001a9053508380600101945050610c37565b600092505b600c831015610d3c5760007f0100000000000000000000000000000000000000000000000000000000000000028584600401815181101515610cff57fe5b9060200101907effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916908160001a9053508280600101935050610cc1565b600091505b6014821015610df1578882815181101515610d5857fe5b9060200101517f010000000000000000000000000000000000000000000000000000000000000090047f0100000000000000000000000000000000000000000000000000000000000000028583601001815181101515610db457fe5b9060200101907effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916908160001a9053508180600101925050610d41565b600090505b6020811015610e7e578681602081101515610e0d57fe5b1a7f0100000000000000000000000000000000000000000000000000000000000000028582602401815181101515610e4157fe5b9060200101907effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916908160001a9053508080600101915050610df6565b849b50505050505050505050505092915050565b610e9a610eca565b60405182741400000000000000000000000000000000000000001860148201526034810160405280915050919050565b6020604051908101604052806000815250905600a165627a7a72305820ac10632eb99fef8b710ae0b152cd7dfeb6c1a9f56db59f2e0114150e05f2abc60029",
+  "sourceMap": "162:1491:0:-;;;506:129;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;343:10:5;335:5;;:18;;;;;;;;;;;;;;;;;;612:15:0;579:14;;:49;;;;;;;;;;;;;;;;;;506:129;162:1491;;;;;;",
+  "deployedSourceMap": "162:1491:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1261:192;;;;;;;;;;;;;;;;;;;;;;;;;;858:170:5;;;;;;;;;;;;;;1459:191:0;;;;;;;;;;;;;;;;;;;;;;;;;;182:20:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;215:37:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;208:23:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;561:210;;;;;;;;;;;;;;;;;;;;;;;;;;;;726:529:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1261:192;416:5:5;;;;;;;;;;;402:19;;:10;:19;;;395:27;;;;;;1345:14:0;;;;;;;;;;;:33;;;1379:14;1345:49;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1404:42;1431:14;1404:42;;;;;;;;;;;;;;;;;;1261:192;:::o;858:170:5:-;924:8;;;;;;;;;;;910:22;;:10;:22;;;902:31;;;;;;;;943:28;955:5;;;;;;;;;;;962:8;;;;;;;;;;;943:28;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;989:8;;;;;;;;;;;981:5;;:16;;;;;;;;;;;;;;;;;;1018:3;1007:8;;:14;;;;;;;;;;;;;;;;;;858:170::o;1459:191:0:-;416:5:5;;;;;;;;;;;402:19;;:10;:19;;;395:27;;;;;;1543:14:0;;;;;;;;;;;:33;;;1577:14;1543:49;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1602:41;1628:14;1602:41;;;;;;;;;;;;;;;;;;1459:191;:::o;182:20:5:-;;;;;;;;;;;;;:::o;215:37:0:-;;;;;;;;;;;;;:::o;208:23:5:-;;;;;;;;;;;;;:::o;561:210::-;416:5;;;;;;;;;;;402:19;;:10;:19;;;395:27;;;;;;654:9;354:3:6;342:8;:15;;;;334:24;;;;;;;;681:9:5;455:4:6;435:25;;:8;:25;;;;427:34;;;;;;;;728:5:5;;;;;;;;;;;715:18;;:9;:18;;;;707:27;;;;;;;;755:9;744:8;;:20;;;;;;;;;;;;;;;;;;368:1:6;432::5;561:210;:::o;726:529:0:-;851:4;872:12;928:17;;:::i;:::-;1070:18;416:5:5;;;;;;;;;;;402:19;;:10;:19;;;395:27;;;;;;901:6:0;:15;;;:17;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;897:2;:21;887:31;;:7;:31;872:46;;948:48;979:10;991:4;948:30;:48::i;:::-;928:68;;1091:14;;;;;;;;;;;:32;;;1124:6;1132:1;1135:4;1091:49;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;80:1;75:3;71;64:6;52:2;49:1;45:3;40:15;;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1070:70:0;;1183:10;1151:67;;1175:6;1151:67;;;1195:7;1204:13;1151:67;;;;;;;;;;;;;;;;;;;;;;;;1235:13;1228:20;;726:529;;;;;;;;:::o;727:1524:4:-;820:5;;:::i;:::-;908:21;997:20;1103:25;;:::i;:::-;1167:23;1376:19;1424:22;1478:17;;:::i;:::-;1635:6;1845;1981;2136;947:38;;;;;;;;;;;;;;;;;;;908:79;;1020:21;997:44;;;;1131:26;1146:10;1131:14;:26::i;:::-;1103:54;;1215:2;1193:12;:19;:24;1167:50;;1406:7;1398:16;;1376:38;;1449:18;1424:43;;;;1547:17;1526:18;1508:15;:36;:56;1498:67;;;;;;;;;;;;;;;;;;;;;;;;;;;1478:87;;1644:1;1635:10;;1630:81;1651:1;1647;:5;1630:81;;;1683:14;1698:1;1683:17;;;;;;;;;;;;1673:4;1678:1;1673:7;;;;;;;;;;;;;;:27;;;;;;;;;;;1654:3;;;;;;;1630:81;;;1854:1;1845:10;;1840:78;1861:2;1857:1;:6;1840:78;;;1905:1;1898:9;;1884:4;1893:1;1889;:5;1884:11;;;;;;;;;;;;;;:23;;;;;;;;;;;1865:3;;;;;;;1840:78;;;1990:1;1981:10;;1976:85;1997:2;1993:1;:6;1976:85;;;2035:12;2048:1;2035:15;;;;;;;;;;;;;;;;;;;;2020:4;2030:1;2025:2;:6;2020:12;;;;;;;;;;;;;;:30;;;;;;;;;;;2001:3;;;;;;;1976:85;;;2145:1;2136:10;;2131:84;2152:2;2148:1;:6;2131:84;;;2190:11;2202:1;2190:14;;;;;;;;;;;;2175:4;2185:1;2180:2;:6;2175:12;;;;;;;;;;;;;;:29;;;;;;;;;;;2156:3;;;;;;;2131:84;;;2240:4;2233:11;;727:1524;;;;;;;;;;;;;;;:::o;2356:404::-;2426:18;;:::i;:::-;2514:4;2508:5;2621:14;2575:44;2571:3;2566:2;2547:17;2543:3;2536:6;2690:2;2671:17;2667:3;2661:4;2654:6;2727:17;2711:33;;2465:289;;;;:::o;162:1491:0:-;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.4.11;\n\nimport \"./interfaces/IMultisigWallet.sol\";\nimport \"./util/Misc.sol\";\nimport \"./util/Owned.sol\";\nimport \"./interfaces/IERC20Token.sol\";\n\ncontract MultisigWalletAdapter is Misc, Owned {\n\n    IMultisigWallet public multisigWallet;\n\n    event SendMultisigTransaction(IERC20Token indexed _token, address indexed _recipient, uint256 _amount, uint _transactionId);\n    event ConfirmMultisigTransaction(uint _transactionId);\n    event RevokeMultisigTransaction(uint _transactionId);\n\n    function MultisigWalletAdapter(address _multisigWallet) public {\n        multisigWallet = IMultisigWallet(_multisigWallet);\n    }\n\n    /**\n     *  Delegates a call of `transfer` function to a multisig wallet\n     */\n    function delegateTransfer(IERC20Token _token, address _recipient, uint256 _amount) public \n        ownerOnly\n        returns(uint) \n    {\n        uint256 test = _amount * 10**_token.decimals();\n        bytes memory data = super.buildTransferPayloadData(_recipient, test);\n\n        // `value` is 0 because we send only tokens, not ether\n        uint transactionId = multisigWallet.submitTransaction(_token, 0, data);\n\n        SendMultisigTransaction(_token, _recipient, _amount, transactionId);\n        return transactionId;\n    }\n\n    function confirmMultisigTransaction(uint _transactionId) public ownerOnly {\n        multisigWallet.confirmTransaction(_transactionId);\n        ConfirmMultisigTransaction(_transactionId);\n    }\n\n    function revokeMultisigConfirmation(uint _transactionId) public ownerOnly {\n        multisigWallet.revokeConfirmation(_transactionId);\n        RevokeMultisigTransaction(_transactionId);\n    }\n\n}",
+  "sourcePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/MultisigWalletAdapter.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/MultisigWalletAdapter.sol",
+      "exportedSymbols": {
+        "MultisigWalletAdapter": [
+          128
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".11"
+          ]
+        },
+        "id": 1,
+        "name": "PragmaDirective",
+        "src": "0:24:0"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 233,
+          "absolutePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/interfaces/IMultisigWallet.sol",
+          "file": "./interfaces/IMultisigWallet.sol",
+          "scope": 129,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 2,
+        "name": "ImportDirective",
+        "src": "26:42:0"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 410,
+          "absolutePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/util/Misc.sol",
+          "file": "./util/Misc.sol",
+          "scope": 129,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 3,
+        "name": "ImportDirective",
+        "src": "69:25:0"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 497,
+          "absolutePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/util/Owned.sol",
+          "file": "./util/Owned.sol",
+          "scope": 129,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 4,
+        "name": "ImportDirective",
+        "src": "95:26:0"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 209,
+          "absolutePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/interfaces/IERC20Token.sol",
+          "file": "./interfaces/IERC20Token.sol",
+          "scope": 129,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 5,
+        "name": "ImportDirective",
+        "src": "122:38:0"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            249,
+            409,
+            496,
+            627
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            128,
+            496,
+            627,
+            249,
+            409
+          ],
+          "name": "MultisigWalletAdapter",
+          "scope": 129
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Misc",
+                  "referencedDeclaration": 409,
+                  "type": "contract Misc"
+                },
+                "id": 6,
+                "name": "UserDefinedTypeName",
+                "src": "196:4:0"
+              }
+            ],
+            "id": 7,
+            "name": "InheritanceSpecifier",
+            "src": "196:4:0"
+          },
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Owned",
+                  "referencedDeclaration": 496,
+                  "type": "contract Owned"
+                },
+                "id": 8,
+                "name": "UserDefinedTypeName",
+                "src": "202:5:0"
+              }
+            ],
+            "id": 9,
+            "name": "InheritanceSpecifier",
+            "src": "202:5:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "multisigWallet",
+              "scope": 128,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract IMultisigWallet",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "IMultisigWallet",
+                  "referencedDeclaration": 232,
+                  "type": "contract IMultisigWallet"
+                },
+                "id": 10,
+                "name": "UserDefinedTypeName",
+                "src": "215:15:0"
+              }
+            ],
+            "id": 11,
+            "name": "VariableDeclaration",
+            "src": "215:37:0"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "SendMultisigTransaction"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "_token",
+                      "scope": 21,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 208,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 12,
+                        "name": "UserDefinedTypeName",
+                        "src": "289:11:0"
+                      }
+                    ],
+                    "id": 13,
+                    "name": "VariableDeclaration",
+                    "src": "289:26:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "_recipient",
+                      "scope": 21,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 14,
+                        "name": "ElementaryTypeName",
+                        "src": "317:7:0"
+                      }
+                    ],
+                    "id": 15,
+                    "name": "VariableDeclaration",
+                    "src": "317:26:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "_amount",
+                      "scope": 21,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 16,
+                        "name": "ElementaryTypeName",
+                        "src": "345:7:0"
+                      }
+                    ],
+                    "id": 17,
+                    "name": "VariableDeclaration",
+                    "src": "345:15:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "_transactionId",
+                      "scope": 21,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 18,
+                        "name": "ElementaryTypeName",
+                        "src": "362:4:0"
+                      }
+                    ],
+                    "id": 19,
+                    "name": "VariableDeclaration",
+                    "src": "362:19:0"
+                  }
+                ],
+                "id": 20,
+                "name": "ParameterList",
+                "src": "288:94:0"
+              }
+            ],
+            "id": 21,
+            "name": "EventDefinition",
+            "src": "259:124:0"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "ConfirmMultisigTransaction"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "_transactionId",
+                      "scope": 25,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 22,
+                        "name": "ElementaryTypeName",
+                        "src": "421:4:0"
+                      }
+                    ],
+                    "id": 23,
+                    "name": "VariableDeclaration",
+                    "src": "421:19:0"
+                  }
+                ],
+                "id": 24,
+                "name": "ParameterList",
+                "src": "420:21:0"
+              }
+            ],
+            "id": 25,
+            "name": "EventDefinition",
+            "src": "388:54:0"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "RevokeMultisigTransaction"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "_transactionId",
+                      "scope": 29,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 26,
+                        "name": "ElementaryTypeName",
+                        "src": "479:4:0"
+                      }
+                    ],
+                    "id": 27,
+                    "name": "VariableDeclaration",
+                    "src": "479:19:0"
+                  }
+                ],
+                "id": 28,
+                "name": "ParameterList",
+                "src": "478:21:0"
+              }
+            ],
+            "id": 29,
+            "name": "EventDefinition",
+            "src": "447:53:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": true,
+              "modifiers": [
+                null
+              ],
+              "name": "MultisigWalletAdapter",
+              "payable": false,
+              "scope": 128,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_multisigWallet",
+                      "scope": 41,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 30,
+                        "name": "ElementaryTypeName",
+                        "src": "537:7:0"
+                      }
+                    ],
+                    "id": 31,
+                    "name": "VariableDeclaration",
+                    "src": "537:23:0"
+                  }
+                ],
+                "id": 32,
+                "name": "ParameterList",
+                "src": "536:25:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 33,
+                "name": "ParameterList",
+                "src": "569:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "contract IMultisigWallet"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 11,
+                              "type": "contract IMultisigWallet",
+                              "value": "multisigWallet"
+                            },
+                            "id": 34,
+                            "name": "Identifier",
+                            "src": "579:14:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "contract IMultisigWallet",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 232,
+                                  "type": "type(contract IMultisigWallet)",
+                                  "value": "IMultisigWallet"
+                                },
+                                "id": 35,
+                                "name": "Identifier",
+                                "src": "596:15:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 31,
+                                  "type": "address",
+                                  "value": "_multisigWallet"
+                                },
+                                "id": 36,
+                                "name": "Identifier",
+                                "src": "612:15:0"
+                              }
+                            ],
+                            "id": 37,
+                            "name": "FunctionCall",
+                            "src": "596:32:0"
+                          }
+                        ],
+                        "id": 38,
+                        "name": "Assignment",
+                        "src": "579:49:0"
+                      }
+                    ],
+                    "id": 39,
+                    "name": "ExpressionStatement",
+                    "src": "579:49:0"
+                  }
+                ],
+                "id": 40,
+                "name": "Block",
+                "src": "569:66:0"
+              }
+            ],
+            "id": 41,
+            "name": "FunctionDefinition",
+            "src": "506:129:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "delegateTransfer",
+              "payable": false,
+              "scope": 128,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_token",
+                      "scope": 91,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IERC20Token",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "IERC20Token",
+                          "referencedDeclaration": 208,
+                          "type": "contract IERC20Token"
+                        },
+                        "id": 42,
+                        "name": "UserDefinedTypeName",
+                        "src": "752:11:0"
+                      }
+                    ],
+                    "id": 43,
+                    "name": "VariableDeclaration",
+                    "src": "752:18:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_recipient",
+                      "scope": 91,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 44,
+                        "name": "ElementaryTypeName",
+                        "src": "772:7:0"
+                      }
+                    ],
+                    "id": 45,
+                    "name": "VariableDeclaration",
+                    "src": "772:18:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_amount",
+                      "scope": 91,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 46,
+                        "name": "ElementaryTypeName",
+                        "src": "792:7:0"
+                      }
+                    ],
+                    "id": 47,
+                    "name": "VariableDeclaration",
+                    "src": "792:15:0"
+                  }
+                ],
+                "id": 48,
+                "name": "ParameterList",
+                "src": "751:57:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 91,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 51,
+                        "name": "ElementaryTypeName",
+                        "src": "851:4:0"
+                      }
+                    ],
+                    "id": 52,
+                    "name": "VariableDeclaration",
+                    "src": "851:4:0"
+                  }
+                ],
+                "id": 53,
+                "name": "ParameterList",
+                "src": "850:6:0"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 447,
+                      "type": "modifier ()",
+                      "value": "ownerOnly"
+                    },
+                    "id": 49,
+                    "name": "Identifier",
+                    "src": "825:9:0"
+                  }
+                ],
+                "id": 50,
+                "name": "ModifierInvocation",
+                "src": "825:9:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "assignments": [
+                        55
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "test",
+                          "scope": 91,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "uint256",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "uint256",
+                              "type": "uint256"
+                            },
+                            "id": 54,
+                            "name": "ElementaryTypeName",
+                            "src": "872:7:0"
+                          }
+                        ],
+                        "id": 55,
+                        "name": "VariableDeclaration",
+                        "src": "872:12:0"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "*",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 47,
+                              "type": "uint256",
+                              "value": "_amount"
+                            },
+                            "id": 56,
+                            "name": "Identifier",
+                            "src": "887:7:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint8",
+                                "typeString": "uint8"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "**",
+                              "type": "uint8"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "3130",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 10",
+                                  "value": "10"
+                                },
+                                "id": 57,
+                                "name": "Literal",
+                                "src": "897:2:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "arguments": [
+                                    null
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "type": "uint8",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        null
+                                      ],
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "decimals",
+                                      "referencedDeclaration": 148,
+                                      "type": "function () pure external returns (uint8)"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 43,
+                                          "type": "contract IERC20Token",
+                                          "value": "_token"
+                                        },
+                                        "id": 58,
+                                        "name": "Identifier",
+                                        "src": "901:6:0"
+                                      }
+                                    ],
+                                    "id": 59,
+                                    "name": "MemberAccess",
+                                    "src": "901:15:0"
+                                  }
+                                ],
+                                "id": 60,
+                                "name": "FunctionCall",
+                                "src": "901:17:0"
+                              }
+                            ],
+                            "id": 61,
+                            "name": "BinaryOperation",
+                            "src": "897:21:0"
+                          }
+                        ],
+                        "id": 62,
+                        "name": "BinaryOperation",
+                        "src": "887:31:0"
+                      }
+                    ],
+                    "id": 63,
+                    "name": "VariableDeclarationStatement",
+                    "src": "872:46:0"
+                  },
+                  {
+                    "attributes": {
+                      "assignments": [
+                        65
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "data",
+                          "scope": 91,
+                          "stateVariable": false,
+                          "storageLocation": "memory",
+                          "type": "bytes memory",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "bytes",
+                              "type": "bytes storage pointer"
+                            },
+                            "id": 64,
+                            "name": "ElementaryTypeName",
+                            "src": "928:5:0"
+                          }
+                        ],
+                        "id": 65,
+                        "name": "VariableDeclaration",
+                        "src": "928:17:0"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "bytes memory",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "buildTransferPayloadData",
+                              "referencedDeclaration": 399,
+                              "type": "function (address,uint256) pure returns (bytes memory)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 663,
+                                  "type": "contract super MultisigWalletAdapter",
+                                  "value": "super"
+                                },
+                                "id": 66,
+                                "name": "Identifier",
+                                "src": "948:5:0"
+                              }
+                            ],
+                            "id": 67,
+                            "name": "MemberAccess",
+                            "src": "948:30:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 45,
+                              "type": "address",
+                              "value": "_recipient"
+                            },
+                            "id": 68,
+                            "name": "Identifier",
+                            "src": "979:10:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 55,
+                              "type": "uint256",
+                              "value": "test"
+                            },
+                            "id": 69,
+                            "name": "Identifier",
+                            "src": "991:4:0"
+                          }
+                        ],
+                        "id": 70,
+                        "name": "FunctionCall",
+                        "src": "948:48:0"
+                      }
+                    ],
+                    "id": 71,
+                    "name": "VariableDeclarationStatement",
+                    "src": "928:68:0"
+                  },
+                  {
+                    "attributes": {
+                      "assignments": [
+                        73
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "transactionId",
+                          "scope": 91,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "uint256",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "uint",
+                              "type": "uint256"
+                            },
+                            "id": 72,
+                            "name": "ElementaryTypeName",
+                            "src": "1070:4:0"
+                          }
+                        ],
+                        "id": 73,
+                        "name": "VariableDeclaration",
+                        "src": "1070:18:0"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "uint256",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_contract$_IERC20Token_$208",
+                                  "typeString": "contract IERC20Token"
+                                },
+                                {
+                                  "typeIdentifier": "t_rational_0_by_1",
+                                  "typeString": "int_const 0"
+                                },
+                                {
+                                  "typeIdentifier": "t_bytes_memory_ptr",
+                                  "typeString": "bytes memory"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "submitTransaction",
+                              "referencedDeclaration": 231,
+                              "type": "function (address,uint256,bytes memory) external returns (uint256)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 11,
+                                  "type": "contract IMultisigWallet",
+                                  "value": "multisigWallet"
+                                },
+                                "id": 74,
+                                "name": "Identifier",
+                                "src": "1091:14:0"
+                              }
+                            ],
+                            "id": 75,
+                            "name": "MemberAccess",
+                            "src": "1091:32:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 43,
+                              "type": "contract IERC20Token",
+                              "value": "_token"
+                            },
+                            "id": 76,
+                            "name": "Identifier",
+                            "src": "1124:6:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 77,
+                            "name": "Literal",
+                            "src": "1132:1:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 65,
+                              "type": "bytes memory",
+                              "value": "data"
+                            },
+                            "id": 78,
+                            "name": "Identifier",
+                            "src": "1135:4:0"
+                          }
+                        ],
+                        "id": 79,
+                        "name": "FunctionCall",
+                        "src": "1091:49:0"
+                      }
+                    ],
+                    "id": 80,
+                    "name": "VariableDeclarationStatement",
+                    "src": "1070:70:0"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_contract$_IERC20Token_$208",
+                                  "typeString": "contract IERC20Token"
+                                },
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 21,
+                              "type": "function (contract IERC20Token,address,uint256,uint256)",
+                              "value": "SendMultisigTransaction"
+                            },
+                            "id": 81,
+                            "name": "Identifier",
+                            "src": "1151:23:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 43,
+                              "type": "contract IERC20Token",
+                              "value": "_token"
+                            },
+                            "id": 82,
+                            "name": "Identifier",
+                            "src": "1175:6:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 45,
+                              "type": "address",
+                              "value": "_recipient"
+                            },
+                            "id": 83,
+                            "name": "Identifier",
+                            "src": "1183:10:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 47,
+                              "type": "uint256",
+                              "value": "_amount"
+                            },
+                            "id": 84,
+                            "name": "Identifier",
+                            "src": "1195:7:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 73,
+                              "type": "uint256",
+                              "value": "transactionId"
+                            },
+                            "id": 85,
+                            "name": "Identifier",
+                            "src": "1204:13:0"
+                          }
+                        ],
+                        "id": 86,
+                        "name": "FunctionCall",
+                        "src": "1151:67:0"
+                      }
+                    ],
+                    "id": 87,
+                    "name": "ExpressionStatement",
+                    "src": "1151:67:0"
+                  },
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 53
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 73,
+                          "type": "uint256",
+                          "value": "transactionId"
+                        },
+                        "id": 88,
+                        "name": "Identifier",
+                        "src": "1235:13:0"
+                      }
+                    ],
+                    "id": 89,
+                    "name": "Return",
+                    "src": "1228:20:0"
+                  }
+                ],
+                "id": 90,
+                "name": "Block",
+                "src": "862:393:0"
+              }
+            ],
+            "id": 91,
+            "name": "FunctionDefinition",
+            "src": "726:529:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "confirmMultisigTransaction",
+              "payable": false,
+              "scope": 128,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_transactionId",
+                      "scope": 109,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 92,
+                        "name": "ElementaryTypeName",
+                        "src": "1297:4:0"
+                      }
+                    ],
+                    "id": 93,
+                    "name": "VariableDeclaration",
+                    "src": "1297:19:0"
+                  }
+                ],
+                "id": 94,
+                "name": "ParameterList",
+                "src": "1296:21:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 97,
+                "name": "ParameterList",
+                "src": "1335:0:0"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 447,
+                      "type": "modifier ()",
+                      "value": "ownerOnly"
+                    },
+                    "id": 95,
+                    "name": "Identifier",
+                    "src": "1325:9:0"
+                  }
+                ],
+                "id": 96,
+                "name": "ModifierInvocation",
+                "src": "1325:9:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "confirmTransaction",
+                              "referencedDeclaration": 215,
+                              "type": "function (uint256) external"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 11,
+                                  "type": "contract IMultisigWallet",
+                                  "value": "multisigWallet"
+                                },
+                                "id": 98,
+                                "name": "Identifier",
+                                "src": "1345:14:0"
+                              }
+                            ],
+                            "id": 100,
+                            "name": "MemberAccess",
+                            "src": "1345:33:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 93,
+                              "type": "uint256",
+                              "value": "_transactionId"
+                            },
+                            "id": 101,
+                            "name": "Identifier",
+                            "src": "1379:14:0"
+                          }
+                        ],
+                        "id": 102,
+                        "name": "FunctionCall",
+                        "src": "1345:49:0"
+                      }
+                    ],
+                    "id": 103,
+                    "name": "ExpressionStatement",
+                    "src": "1345:49:0"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 25,
+                              "type": "function (uint256)",
+                              "value": "ConfirmMultisigTransaction"
+                            },
+                            "id": 104,
+                            "name": "Identifier",
+                            "src": "1404:26:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 93,
+                              "type": "uint256",
+                              "value": "_transactionId"
+                            },
+                            "id": 105,
+                            "name": "Identifier",
+                            "src": "1431:14:0"
+                          }
+                        ],
+                        "id": 106,
+                        "name": "FunctionCall",
+                        "src": "1404:42:0"
+                      }
+                    ],
+                    "id": 107,
+                    "name": "ExpressionStatement",
+                    "src": "1404:42:0"
+                  }
+                ],
+                "id": 108,
+                "name": "Block",
+                "src": "1335:118:0"
+              }
+            ],
+            "id": 109,
+            "name": "FunctionDefinition",
+            "src": "1261:192:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "revokeMultisigConfirmation",
+              "payable": false,
+              "scope": 128,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_transactionId",
+                      "scope": 127,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 110,
+                        "name": "ElementaryTypeName",
+                        "src": "1495:4:0"
+                      }
+                    ],
+                    "id": 111,
+                    "name": "VariableDeclaration",
+                    "src": "1495:19:0"
+                  }
+                ],
+                "id": 112,
+                "name": "ParameterList",
+                "src": "1494:21:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 115,
+                "name": "ParameterList",
+                "src": "1533:0:0"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 447,
+                      "type": "modifier ()",
+                      "value": "ownerOnly"
+                    },
+                    "id": 113,
+                    "name": "Identifier",
+                    "src": "1523:9:0"
+                  }
+                ],
+                "id": 114,
+                "name": "ModifierInvocation",
+                "src": "1523:9:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "revokeConfirmation",
+                              "referencedDeclaration": 220,
+                              "type": "function (uint256) external"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 11,
+                                  "type": "contract IMultisigWallet",
+                                  "value": "multisigWallet"
+                                },
+                                "id": 116,
+                                "name": "Identifier",
+                                "src": "1543:14:0"
+                              }
+                            ],
+                            "id": 118,
+                            "name": "MemberAccess",
+                            "src": "1543:33:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 111,
+                              "type": "uint256",
+                              "value": "_transactionId"
+                            },
+                            "id": 119,
+                            "name": "Identifier",
+                            "src": "1577:14:0"
+                          }
+                        ],
+                        "id": 120,
+                        "name": "FunctionCall",
+                        "src": "1543:49:0"
+                      }
+                    ],
+                    "id": 121,
+                    "name": "ExpressionStatement",
+                    "src": "1543:49:0"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 29,
+                              "type": "function (uint256)",
+                              "value": "RevokeMultisigTransaction"
+                            },
+                            "id": 122,
+                            "name": "Identifier",
+                            "src": "1602:25:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 111,
+                              "type": "uint256",
+                              "value": "_transactionId"
+                            },
+                            "id": 123,
+                            "name": "Identifier",
+                            "src": "1628:14:0"
+                          }
+                        ],
+                        "id": 124,
+                        "name": "FunctionCall",
+                        "src": "1602:41:0"
+                      }
+                    ],
+                    "id": 125,
+                    "name": "ExpressionStatement",
+                    "src": "1602:41:0"
+                  }
+                ],
+                "id": 126,
+                "name": "Block",
+                "src": "1533:117:0"
+              }
+            ],
+            "id": 127,
+            "name": "FunctionDefinition",
+            "src": "1459:191:0"
+          }
+        ],
+        "id": 128,
+        "name": "ContractDefinition",
+        "src": "162:1491:0"
+      }
+    ],
+    "id": 129,
+    "name": "SourceUnit",
+    "src": "0:1653:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {
+    "1518704852462": {
+      "events": {},
+      "links": {},
+      "address": "0x995d45cc9664581ec8071b3195cfce1d7f992852"
+    }
+  },
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-02-15T18:24:09.149Z"
+}

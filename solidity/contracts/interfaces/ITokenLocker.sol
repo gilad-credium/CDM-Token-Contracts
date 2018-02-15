@@ -1,9 +1,10 @@
 pragma solidity ^0.4.11;
 
-import "../util/Owned.sol";
+import "./IMultisigTokenLocker.sol";
 import "./IERC20Token.sol";
 
-contract ITokenLocker is Owned {
+
+contract ITokenLocker is IMultisigTokenLocker {
     
     uint256 public pendingLocked = 0;
     uint256 public confirmedLocked = 0;
