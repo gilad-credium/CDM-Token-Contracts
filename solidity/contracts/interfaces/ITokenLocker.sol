@@ -1,21 +1,25 @@
 pragma solidity ^0.4.11;
 
-import "./IMultisigTokenLocker.sol";
+import "../util/Owned.sol";
+import "../MultisigWalletAdapter.sol";
 import "./IERC20Token.sol";
 
 
-contract ITokenLocker is IMultisigTokenLocker {
+contract ITokenLocker is Owned {
     
     uint256 public pendingLocked = 0;
     uint256 public confirmedLocked = 0;
     mapping (address => mapping (address => Lock)) public accountLockedAmount;
+
+    MultisigWalletAdapter public multisigWalletAdapter;
 
     bool public lockupEnabled;
 
     event PendingLockup(address indexed _recipient, IERC20Token indexed _targetToken, uint256 _amount, uint256 _releaseTimestamp);
     event CancelLockup(address indexed _owner, address indexed _recipient, IERC20Token indexed _targetToken);
     event ConfirmLockup(address indexed _recipient, IERC20Token indexed _targetToken);
-    event Collect(address indexed _recipient, IERC20Token indexed _targetToken);
+    event Collect(address indexed _recipient, IERC20Token indexed _targetToken, uint256 _amount);
+    event RequestCollect(address indexed _recipient, IERC20Token indexed _targetToken, uint transactionId);
     event Redeem(IERC20Token indexed _targetToken, uint256 _amount);
 
     struct Lock {
@@ -23,6 +27,7 @@ contract ITokenLocker is IMultisigTokenLocker {
         uint256 amount;
         bool confirmed;
         bool collected;
+        bool requestedCollect;
         bool hasValue;
     }
 
@@ -52,9 +57,9 @@ contract ITokenLocker is IMultisigTokenLocker {
 
     function confirm(IERC20Token _targetToken) public returns(bool);
 
-    function collect(IERC20Token _targetToken) public returns(bool);
+    function requestCollect(IERC20Token _targetToken) public returns(bool);
 
-    function redeem(IERC20Token _targetToken) public returns(bool);
+    function setCollected(IERC20Token _targetToken) public returns(bool);
 
     function getLockupAmount(address _recipient, IERC20Token _targetToken) public view returns(uint256) {
         return accountLockedAmount[_recipient][_targetToken].amount;
@@ -72,6 +77,10 @@ contract ITokenLocker is IMultisigTokenLocker {
         return accountLockedAmount[_recipient][_targetToken].collected;
     }
 
+    function isRequested(address _recipient, IERC20Token _targetToken) public view returns(bool) {
+        return accountLockedAmount[_recipient][_targetToken].requestedCollect;
+    }
+
     function hasValue(address _recipient, IERC20Token _targetToken) public view returns(bool) {
         return accountLockedAmount[_recipient][_targetToken].hasValue;
     }
@@ -86,6 +95,14 @@ contract ITokenLocker is IMultisigTokenLocker {
 
     function setLockupEnabled(bool enable) public ownerOnly {
         lockupEnabled = enable;
+    }
+
+    function acceptMultisigWalletAdapterOwnership() public ownerOnly {
+        multisigWalletAdapter.acceptOwnership();
+    }
+
+    function transferTokenOwnership(address _newOwner) public ownerOnly {
+        multisigWalletAdapter.transferOwnership(_newOwner);
     }
 
 }

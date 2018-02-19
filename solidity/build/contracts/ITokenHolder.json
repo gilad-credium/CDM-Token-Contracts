@@ -66,13 +66,13 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.11;\nimport \"./IOwned.sol\";\nimport \"./IERC20Token.sol\";\n\n/**\n*    forked from https://github.com/bancorprotocol/contracts\n*    Token Holder interface\n*/\ncontract ITokenHolder is IOwned {\n    function withdrawTokens(IERC20Token _token, address _to, uint256 _amount) public;\n}\n",
-  "sourcePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/interfaces/ITokenHolder.sol",
+  "sourcePath": "/home/therasymchuk/Workspace/github/CDM-Token-Contracts/solidity/contracts/interfaces/ITokenHolder.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/interfaces/ITokenHolder.sol",
+      "absolutePath": "/home/therasymchuk/Workspace/github/CDM-Token-Contracts/solidity/contracts/interfaces/ITokenHolder.sol",
       "exportedSymbols": {
         "ITokenHolder": [
-          1366
+          1406
         ]
       }
     },
@@ -86,54 +86,54 @@
             ".11"
           ]
         },
-        "id": 1352,
+        "id": 1392,
         "name": "PragmaDirective",
-        "src": "0:24:9"
+        "src": "0:24:10"
       },
       {
         "attributes": {
-          "SourceUnit": 1323,
-          "absolutePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/interfaces/IOwned.sol",
+          "SourceUnit": 1363,
+          "absolutePath": "/home/therasymchuk/Workspace/github/CDM-Token-Contracts/solidity/contracts/interfaces/IOwned.sol",
           "file": "./IOwned.sol",
-          "scope": 1367,
+          "scope": 1407,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 1353,
+        "id": 1393,
         "name": "ImportDirective",
-        "src": "25:22:9"
+        "src": "25:22:10"
       },
       {
         "attributes": {
-          "SourceUnit": 1282,
-          "absolutePath": "/home/taras/Workspace/vscode/CDM-Token-Contracts/solidity/contracts/interfaces/IERC20Token.sol",
+          "SourceUnit": 1288,
+          "absolutePath": "/home/therasymchuk/Workspace/github/CDM-Token-Contracts/solidity/contracts/interfaces/IERC20Token.sol",
           "file": "./IERC20Token.sol",
-          "scope": 1367,
+          "scope": 1407,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 1354,
+        "id": 1394,
         "name": "ImportDirective",
-        "src": "48:27:9"
+        "src": "48:27:10"
       },
       {
         "attributes": {
           "contractDependencies": [
-            1322
+            1362
           ],
           "contractKind": "contract",
           "documentation": "   forked from https://github.com/bancorprotocol/contracts\n   Token Holder interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            1366,
-            1322
+            1406,
+            1362
           ],
           "name": "ITokenHolder",
-          "scope": 1367
+          "scope": 1407
         },
         "children": [
           {
@@ -147,17 +147,17 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "IOwned",
-                  "referencedDeclaration": 1322,
+                  "referencedDeclaration": 1362,
                   "type": "contract IOwned"
                 },
-                "id": 1355,
+                "id": 1395,
                 "name": "UserDefinedTypeName",
-                "src": "198:6:9"
+                "src": "198:6:10"
               }
             ],
-            "id": 1356,
+            "id": 1396,
             "name": "InheritanceSpecifier",
-            "src": "198:6:9"
+            "src": "198:6:10"
           },
           {
             "attributes": {
@@ -170,7 +170,7 @@
               ],
               "name": "withdrawTokens",
               "payable": false,
-              "scope": 1366,
+              "scope": 1406,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -182,7 +182,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_token",
-                      "scope": 1365,
+                      "scope": 1405,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "contract IERC20Token",
@@ -194,23 +194,23 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "IERC20Token",
-                          "referencedDeclaration": 1281,
+                          "referencedDeclaration": 1287,
                           "type": "contract IERC20Token"
                         },
-                        "id": 1357,
+                        "id": 1397,
                         "name": "UserDefinedTypeName",
-                        "src": "235:11:9"
+                        "src": "235:11:10"
                       }
                     ],
-                    "id": 1358,
+                    "id": 1398,
                     "name": "VariableDeclaration",
-                    "src": "235:18:9"
+                    "src": "235:18:10"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "_to",
-                      "scope": 1365,
+                      "scope": 1405,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -223,20 +223,20 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1359,
+                        "id": 1399,
                         "name": "ElementaryTypeName",
-                        "src": "255:7:9"
+                        "src": "255:7:10"
                       }
                     ],
-                    "id": 1360,
+                    "id": 1400,
                     "name": "VariableDeclaration",
-                    "src": "255:11:9"
+                    "src": "255:11:10"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "_amount",
-                      "scope": 1365,
+                      "scope": 1405,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -249,19 +249,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 1361,
+                        "id": 1401,
                         "name": "ElementaryTypeName",
-                        "src": "268:7:9"
+                        "src": "268:7:10"
                       }
                     ],
-                    "id": 1362,
+                    "id": 1402,
                     "name": "VariableDeclaration",
-                    "src": "268:15:9"
+                    "src": "268:15:10"
                   }
                 ],
-                "id": 1363,
+                "id": 1403,
                 "name": "ParameterList",
-                "src": "234:50:9"
+                "src": "234:50:10"
               },
               {
                 "attributes": {
@@ -270,24 +270,24 @@
                   ]
                 },
                 "children": [],
-                "id": 1364,
+                "id": 1404,
                 "name": "ParameterList",
-                "src": "291:0:9"
+                "src": "291:0:10"
               }
             ],
-            "id": 1365,
+            "id": 1405,
             "name": "FunctionDefinition",
-            "src": "211:81:9"
+            "src": "211:81:10"
           }
         ],
-        "id": 1366,
+        "id": 1406,
         "name": "ContractDefinition",
-        "src": "173:121:9"
+        "src": "173:121:10"
       }
     ],
-    "id": 1367,
+    "id": 1407,
     "name": "SourceUnit",
-    "src": "0:295:9"
+    "src": "0:295:10"
   },
   "compiler": {
     "name": "solc",
@@ -295,5 +295,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-15T14:29:34.522Z"
+  "updatedAt": "2018-02-16T11:57:21.775Z"
 }

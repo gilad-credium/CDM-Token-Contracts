@@ -1,5 +1,7 @@
 const TokenLocker = artifacts.require("TokenLocker.sol");
-const CrediumToken = artifacts.require("CrediumToken.sol")
+const CrediumToken = artifacts.require("CrediumToken.sol");
+const MultisigWalletAdapter = artifacts.require("MultisigWalletAdapter.sol");
+const MultiSigWalletTest = artifacts.require("MultiSigWalletTest.sol");
 const Utils = artifacts.require('Utils.sol');
 const Owned = artifacts.require('Owned.sol');
 const TokenHolder = artifacts.require('TokenHolder.sol');
@@ -12,13 +14,22 @@ function verifyException(stacktrace) {
 contract("TokenLocker", (accounts) => {
 
     let amount = 5;
+    var multisigWalletAdapter;
+    var multiSigWalletTest;
     var timestamp;
     var token;
     var tokenLocker;
     var now;
     
     beforeEach(async () => {
-        tokenLocker = await TokenLocker.new();
+        let owners = [accounts[0], accounts[1]];
+        multiSigWalletTest = await MultiSigWalletTest.new(owners, 2);
+        multisigWalletAdapter = await MultisigWalletAdapter.new(multiSigWalletTest.address);
+        tokenLocker = await TokenLocker.new(multisigWalletAdapter.address);
+        let txId = await multiSigWalletTest.addOwner(tokenLocker.address);
+        await multiSigWalletTest.confirmTransaction(txId, {from: accounts[1]});
+        await multisigWalletAdapter.transferOwnership(tokenLocker.address);
+        await tokenLocker.acceptMultisigWalletAdapterOwnership();
         token = await CrediumToken.new("CrediumTestToken", "CTT", 18);
         await token.issue(accounts[0], 500);
         await token.approve(tokenLocker.address, 0);
@@ -33,16 +44,6 @@ contract("TokenLocker", (accounts) => {
                 let nonOwnerAccount = accounts[2];
                 assert.notEqual(await tokenLocker.owner.call(), nonOwnerAccount)
                 await tokenLocker.lockup(accounts[1], token.address, amount, timestamp, { from: nonOwnerAccount }); 
-                assert(false, "no error. something went wrong");
-            } catch (error) {
-                let stacktrace = error.toString();
-                return assert(verifyException(stacktrace), stacktrace);
-            }
-        });
-    
-        it("should throw if the amount is not greater than 0", async () => {
-            try {
-                await tokenLocker.lockup(accounts[1], token.address, 0, timestamp); 
                 assert(false, "no error. something went wrong");
             } catch (error) {
                 let stacktrace = error.toString();
@@ -95,11 +96,11 @@ contract("TokenLocker", (accounts) => {
             assert.equal(await tokenLocker.getLockupReleaseTimestamp.call(accounts[1], token.address), timestamp);
         });
     
-        it("should increase _recipient's locked amount by an amount if a _recipient has previous value", async () => {
+        it("should change _recipient's locked amount if a _recipient has previous value", async () => {
             await tokenLocker.lockup(accounts[1], token.address, amount, timestamp);
             assert.equal(await tokenLocker.getLockupAmount.call(accounts[1], token.address), amount);
-            await tokenLocker.lockup(accounts[1], token.address, amount, timestamp);
-            assert.equal(await tokenLocker.getLockupAmount.call(accounts[1], token.address), amount + amount);
+            await tokenLocker.lockup(accounts[1], token.address, amount + 5, timestamp);
+            assert.equal(await tokenLocker.getLockupAmount.call(accounts[1], token.address), amount + 5);
         });
     
         it("should throw if an owner tries to change _recipient's amount when `releaseTimestamp > block.timestamp`", async () => {
@@ -138,7 +139,7 @@ contract("TokenLocker", (accounts) => {
 
     describe("cancel", async () => {
         beforeEach(async () => {
-            await tokenLocker.lockup(accounts[1], token.address, amount, timestamp + util.addDays(10000));
+            await tokenLocker.lockup(accounts[1], token.address, amount, timestamp);
         });
 
         it("should throw if called by a non-owner", async () => {
@@ -153,10 +154,11 @@ contract("TokenLocker", (accounts) => {
             }
         });
 
-        it("should throw if an owner tries to cancel a collected lockup", async () => {
+        it("should throw if an owner attempts to cancel a collected lockup", async () => {
             try {
                 await tokenLocker.confirm(token.address, { from: accounts[1] });
-                await tokenLocker.collect(token.address, { from: accounts[1] });
+                await tokenLocker.requestCollect(token.address, { from: accounts[1] });
+                await tokenLocker.setCollected(token.address, { from: accounts[1] });
                 await tokenLocker.cancel(accounts[1], token.address);
                 assert(false, "no error. something went wrong");
             } catch (error) {
@@ -196,6 +198,7 @@ contract("TokenLocker", (accounts) => {
             await tokenLocker.cancel(accounts[1], token.address);
             assert.isFalse(await tokenLocker.isConfirmed.call(accounts[1], token.address));
             assert.isFalse(await tokenLocker.isCollected.call(accounts[1], token.address));
+            assert.isFalse(await tokenLocker.isRequested.call(accounts[1], token.address));
             assert.isFalse(await tokenLocker.hasValue.call(accounts[1], token.address));
             assert.equal(await tokenLocker.getLockupAmount.call(accounts[1], token.address), 0);
             assert.equal(await tokenLocker.getLockupReleaseTimestamp.call(accounts[1], token.address), 0);
@@ -229,10 +232,10 @@ contract("TokenLocker", (accounts) => {
             }
         });
 
-        it("should throw if a `msg.sender` tries to confirm a collected lockup", async () => {
+        it("should throw if a `msg.sender` tries to confirm a requestedCollect lockup", async () => {
             try {
                 await tokenLocker.confirm(token.address, { from: accounts[1] });
-                await tokenLocker.collect(token.address, { from: accounts[1] });
+                await tokenLocker.requestCollect(token.address, { from: accounts[1] });
                 await tokenLocker.confirm(token.address, { from: accounts[1] });
                 assert(false, "no error. something went wrong");
             } catch (error) {
@@ -263,15 +266,18 @@ contract("TokenLocker", (accounts) => {
     
     });
 
-    describe("collect", async () => {
+    describe("requestCollect", async () => {
         beforeEach(async () => {
             await tokenLocker.lockup(accounts[1], token.address, amount, timestamp);
+
         });
 
-        it("should throw if a `msg.sender` attempts to confirm a collected lockup", async () => {
+        it("should throw if a `msg.sender` attempts to requestCollect a requestedCollect lockup", async () => {
             try {
-                await tokenLocker.collect(token.address, { from: accounts[1] });
                 await tokenLocker.confirm(token.address, { from: accounts[1] });
+                await util.increaseEvmTime(14);
+                // await tokenLocker.requestCollect(token.address, { from: accounts[1] });
+                await tokenLocker.requestCollect(token.address, { from: accounts[1] });
                 assert(false, "no error. something went wrong");
             } catch (error) {
                 let stacktrace = error.toString();
@@ -279,10 +285,11 @@ contract("TokenLocker", (accounts) => {
             }
         });
 
-        it("should throw when attempts to collect non-existing `_recipient -> _targetToken` pair", async () => {
+        it("should throw when attempts to requestCollect non-existing `_recipient -> _targetToken` pair", async () => {
             try {
                 await tokenLocker.confirm("0xa1234", { from: accounts[5] });
-                await tokenLocker.collect("0xa1234", { from: accounts[5] });
+                util.increaseEvmTime(14);
+                await tokenLocker.requestCollect("0xa1234", { from: accounts[5] });
                 assert(false, "no error. something went wrong");
             } catch (error) {
                 let stacktrace = error.toString();
@@ -290,79 +297,25 @@ contract("TokenLocker", (accounts) => {
             }
         });
 
-        it("should decrease `confirmedLocked` value by an account's `_amount`", async () => {
-            await tokenLocker.confirm(token.address, { from: accounts[1] });
-            let confirmedLockedAmountBeforeConfirm = await tokenLocker.confirmedLocked.call();
-            assert.equal(confirmedLockedAmountBeforeConfirm, amount);
-            let accountsLockupAmount = await tokenLocker.getLockupAmount.call(accounts[1], token.address);
-            util.increaseEvmTime(14);
-            await tokenLocker.collect(token.address, { from: accounts[1] });
-            assert.equal(await tokenLocker.confirmedLocked.call(), confirmedLockedAmountBeforeConfirm - accountsLockupAmount);
-        });
+        // it("should decrease `confirmedLocked` value by an account's `_amount`", async () => {
+        //     await tokenLocker.confirm(token.address, { from: accounts[1] });
+        //     let confirmedLockedAmountBeforeConfirm = await tokenLocker.confirmedLocked.call();
+        //     assert.equal(confirmedLockedAmountBeforeConfirm, amount);
+        //     let accountsLockupAmount = await tokenLocker.getLockupAmount.call(accounts[1], token.address);
+        //     util.increaseEvmTime(14);
+        //     await tokenLocker.requestCollect(token.address, { from: accounts[1] });
+        //     assert.equal(await tokenLocker.confirmedLocked.call(), confirmedLockedAmountBeforeConfirm - accountsLockupAmount);
+        // });
 
-        it("should throw when attempts to collect a non-confirmed lockup", async () => {
+        it("should throw when attempts to requestCollect a non-confirmed lockup", async () => {
             try {
-                await tokenLocker.collect(token.address, { from: accounts[1] });
+                util.increaseEvmTime(14);
+                await tokenLocker.requestCollect(token.address, { from: accounts[1] });
                 assert(false, "no error. something went wrong");
             } catch (error) {
                 let stacktrace = error.toString();
                 return assert(verifyException(stacktrace), stacktrace);
             }
-        });
-
-    });
-
-    describe("redeem", async () => {
-        beforeEach(async () => {
-            await tokenLocker.lockup(accounts[1], token.address, amount, timestamp);
-        });
-
-        it("should throw if called by a non-owner", async () => {
-            try {
-                let nonOwnerAccount = accounts[2];
-                assert.notEqual(await tokenLocker.owner.call(), nonOwnerAccount)
-                await tokenLocker.redeem(token.address, { from: nonOwnerAccount }); 
-                assert(false, "no error. something went wrong");
-            } catch (error) {
-                let stacktrace = error.toString();
-                return assert(verifyException(stacktrace), stacktrace);
-            }
-        });
-
-        it("should throw if pendingLocked != 0", async () => {
-            try {
-                assert.isAbove(await tokenLocker.pendingLocked.call(), 0);
-                await tokenLocker.redeem(token.address, { from: accounts[0] }); 
-                assert(false, "no error. something went wrong");
-            } catch (error) {
-                let stacktrace = error.toString();
-                return assert(verifyException(stacktrace), stacktrace);
-            }
-        });
-
-        it("should throw if confirmedLocked != 0", async () => {
-            try {
-                await tokenLocker.confirm(token.address, { from: accounts[1] });
-                assert.isAbove(await tokenLocker.confirmedLocked.call(), 0);
-                await tokenLocker.redeem(token.address, { from: accounts[0] }); 
-                assert(false, "no error. something went wrong");
-            } catch (error) {
-                let stacktrace = error.toString();
-                return assert(verifyException(stacktrace), stacktrace);
-            }
-        });
-
-        it("should set lockupEnabled to false", async () => {
-            await tokenLocker.cancel(accounts[1], token.address, { from: accounts[0] });
-            await tokenLocker.redeem(token.address, { from: accounts[0] });
-            assert.isFalse(await tokenLocker.lockupEnabled.call());
-        });
-
-        it("should set tockenLocker token balance to 0", async () => {
-            assert.isAbove(await token.balanceOf(tokenLocker.address), 0);
-            await tokenLocker.cancel(accounts[1], token.address, { from: accounts[0] });
-            await tokenLocker.redeem(token.address, { from: accounts[0] });
-            assert.equal(await token.balanceOf(tokenLocker.address), 0);
         });
 
     });

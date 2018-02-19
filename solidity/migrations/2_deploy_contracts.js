@@ -13,8 +13,8 @@ module.exports = async (deployer) => {
     deployer.deploy(Utils);
     deployer.deploy(Owned);
     deployer.deploy(TokenHolder);
-    await deployer.deploy(MultisigWalletAdapter, "0x123");
+    await deployer.deploy(MultisigWalletAdapter, "0x0000000000000000000000000000000000000042");
     deployer.deploy(TokenLocker, MultisigWalletAdapter.address);
     await deployer.deploy(CrediumToken, 'Credium', 'CDM', 18);
-    deployer.deploy(CrowdsaleContract, CrediumToken.address, 1518712456, "0x123")
+    deployer.deploy(CrowdsaleContract, CrediumToken.address, 420000000000000, "0x0000000000000000000000000000000000000042")
 };

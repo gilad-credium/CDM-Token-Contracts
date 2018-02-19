@@ -18,6 +18,15 @@ contract TokenLocker is ITokenLocker {
         multisigWalletAdapter = _multisigWalletAdapter;
     }
 
+    function setMultisigWalletAdapter(MultisigWalletAdapter _multisigWalletAdapter) public {
+        multisigWalletAdapter = _multisigWalletAdapter;
+    }
+
+    function transferToMultisigWallet(address _owner, IERC20Token _targetToken, uint256 _amount) private {
+        require(checkAllowance(_targetToken, _owner, address(this), _amount));
+        assert(_targetToken.transferFrom(_owner, multisigWalletAdapter.multisigWallet(), _amount));
+    }
+
     function lockup(address _recipient, IERC20Token _targetToken, uint256 _amount, uint256 _releaseTimestamp) public 
         ownerOnly
         isLockupEnabled
@@ -29,23 +38,13 @@ contract TokenLocker is ITokenLocker {
     {
         if (accountLockedAmount[_recipient][_targetToken].hasValue) {
             Lock storage lock = accountLockedAmount[_recipient][_targetToken];
-            uint256 sum = safeAdd(lock.amount, _amount);
-            require(super.checkAllowance(_targetToken, msg.sender, address(this), sum));
             require(lock.releaseTimestamp > now && _releaseTimestamp >= lock.releaseTimestamp);
-
-            assert(_targetToken.transferFrom(msg.sender, address(this), lock.amount));
-
-            lock.amount = sum;
+            transferToMultisigWallet(msg.sender, _targetToken, _amount);
+            lock.amount = _amount;
         } else {
-            // TODO
-            // require(_releaseTimestamp > now);
-            // require(super.checkAllowance(_targetToken, msg.sender, address(this), _amount));
-
-            // assert(_targetToken.transferFrom(msg.sender, address(this), _amount));
-
-            multisigWalletAdapter.delegateTransfer(_targetToken, _recipient, _amount);
-
-            accountLockedAmount[_recipient][_targetToken] = Lock(_releaseTimestamp, _amount, false, false, true);
+            require(_releaseTimestamp > now);
+            transferToMultisigWallet(msg.sender, _targetToken, _amount);
+            accountLockedAmount[_recipient][_targetToken] = Lock(_releaseTimestamp, _amount, false, false, false, true);
         }
 
         if (tokenOwners[_targetToken] == 0x0) {
@@ -85,6 +84,7 @@ contract TokenLocker is ITokenLocker {
         returns(bool) 
     {
         Lock storage lock = accountLockedAmount[msg.sender][_targetToken];
+        require(!lock.requestedCollect);
         lock.confirmed = true;
         pendingLocked = safeSub(pendingLocked, lock.amount);
         confirmedLocked = safeAdd(confirmedLocked, lock.amount);
@@ -93,34 +93,33 @@ contract TokenLocker is ITokenLocker {
         return true;
     }
 
-    function collect(IERC20Token _targetToken) public 
+    function requestCollect(IERC20Token _targetToken) public 
         containsRecipient(msg.sender, _targetToken) 
-        notCollected(msg.sender, _targetToken) 
         returns(bool) 
     {
         Lock storage lock = accountLockedAmount[msg.sender][_targetToken];
         require(lock.confirmed);
+        require(!lock.requestedCollect);
         require(super.isReleaseTime(msg.sender, _targetToken));
         
-        assert(_targetToken.transfer(msg.sender, lock.amount));
-        lock.collected = true;
-        confirmedLocked = safeSub(confirmedLocked, lock.amount);
+        uint transactionId = multisigWalletAdapter.delegateTransfer(_targetToken, msg.sender, lock.amount);
+        lock.requestedCollect = true;
 
-        Collect(msg.sender, _targetToken);
+        RequestCollect(msg.sender, _targetToken, transactionId);
         return true;
     }
 
-    function redeem(IERC20Token _targetToken) public
-        ownerOnly
-        returns(bool)
+    function setCollected(IERC20Token _targetToken) public 
+        containsRecipient(msg.sender, _targetToken) 
+        notCollected(msg.sender, _targetToken) 
+        returns (bool)
     {
-        require(pendingLocked == 0 && confirmedLocked == 0);
+        Lock storage lock = accountLockedAmount[msg.sender][_targetToken];
+        require(lock.requestedCollect);
+        lock.collected = true;
+        confirmedLocked = safeSub(confirmedLocked, lock.amount);
 
-        uint256 tokenAmount = _targetToken.balanceOf(address(this));
-        assert(_targetToken.transfer(tokenOwners[_targetToken], tokenAmount));
-        super.setLockupEnabled(false);
-
-        Redeem(_targetToken, tokenAmount);
+        Collect(msg.sender, _targetToken, lock.amount);
         return true;
     }
 
