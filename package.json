@@ -9,11 +9,11 @@
     "npm": "^8.9.4"
   },
   "scripts": {
-    "testrpc": "testrpc",
+    "localnet": "ganache-cli",
     "test": "solium -d solidity/ && cd solidity && truffle test"
   },
   "dependencies": {
-    "ethereumjs-testrpc": "^6.0.3",
+    "ganache-cli": "^6.0.3",
     "solium": "^1.1.3",
     "truffle": "^4.0.5"
   }

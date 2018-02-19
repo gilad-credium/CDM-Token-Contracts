@@ -87,4 +87,11 @@ contract ITokenLocker is Owned {
         lockupEnabled = enable;
     }
 
+    function transferToThis(address _owner, IERC20Token _targetToken, uint256 _amount) internal returns(bool) {
+        require(checkAllowance(_targetToken, _owner, address(this), _amount));
+        assert(_targetToken.transferFrom(_owner, address(this), _amount));
+
+        return true;
+    }
+
 }

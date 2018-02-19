@@ -24,7 +24,7 @@ contract("TokenLocker", (accounts) => {
         await token.approve(tokenLocker.address, 0);
         await token.approve(tokenLocker.address, 200);
         now = await web3.eth.getBlock(web3.eth.blockNumber).timestamp;
-        timestamp = now + util.addDays(14);
+        timestamp = now + await util.addDays(14);
     });
 
     describe("lockup", async () => {
@@ -33,16 +33,6 @@ contract("TokenLocker", (accounts) => {
                 let nonOwnerAccount = accounts[2];
                 assert.notEqual(await tokenLocker.owner.call(), nonOwnerAccount)
                 await tokenLocker.lockup(accounts[1], token.address, amount, timestamp, { from: nonOwnerAccount }); 
-                assert(false, "no error. something went wrong");
-            } catch (error) {
-                let stacktrace = error.toString();
-                return assert(verifyException(stacktrace), stacktrace);
-            }
-        });
-    
-        it("should throw if the amount is not greater than 0", async () => {
-            try {
-                await tokenLocker.lockup(accounts[1], token.address, 0, timestamp); 
                 assert(false, "no error. something went wrong");
             } catch (error) {
                 let stacktrace = error.toString();
@@ -95,17 +85,17 @@ contract("TokenLocker", (accounts) => {
             assert.equal(await tokenLocker.getLockupReleaseTimestamp.call(accounts[1], token.address), timestamp);
         });
     
-        it("should increase _recipient's locked amount by an amount if a _recipient has previous value", async () => {
+        it("should change _recipient's locked amount if a _recipient has previous value", async () => {
             await tokenLocker.lockup(accounts[1], token.address, amount, timestamp);
             assert.equal(await tokenLocker.getLockupAmount.call(accounts[1], token.address), amount);
-            await tokenLocker.lockup(accounts[1], token.address, amount, timestamp);
-            assert.equal(await tokenLocker.getLockupAmount.call(accounts[1], token.address), amount + amount);
+            await tokenLocker.lockup(accounts[1], token.address, amount + 5, timestamp);
+            assert.equal(await tokenLocker.getLockupAmount.call(accounts[1], token.address), amount + 5);
         });
     
         it("should throw if an owner tries to change _recipient's amount when `releaseTimestamp > block.timestamp`", async () => {
             try {
                 await tokenLocker.lockup(accounts[1], token.address, amount, timestamp);
-                util.increaseEvmTime(14);
+                await util.increaseEvmTime(14);
                 await tokenLocker.lockup(accounts[1], token.address, amount, now);
                 assert(false, "no error. something went wrong");
             } catch (error) {
@@ -138,7 +128,7 @@ contract("TokenLocker", (accounts) => {
 
     describe("cancel", async () => {
         beforeEach(async () => {
-            await tokenLocker.lockup(accounts[1], token.address, amount, timestamp + util.addDays(10000));
+            await tokenLocker.lockup(accounts[1], token.address, amount, timestamp);
         });
 
         it("should throw if called by a non-owner", async () => {
@@ -156,6 +146,7 @@ contract("TokenLocker", (accounts) => {
         it("should throw if an owner tries to cancel a collected lockup", async () => {
             try {
                 await tokenLocker.confirm(token.address, { from: accounts[1] });
+                await util.increaseEvmTime(14);
                 await tokenLocker.collect(token.address, { from: accounts[1] });
                 await tokenLocker.cancel(accounts[1], token.address);
                 assert(false, "no error. something went wrong");
@@ -232,6 +223,7 @@ contract("TokenLocker", (accounts) => {
         it("should throw if a `msg.sender` tries to confirm a collected lockup", async () => {
             try {
                 await tokenLocker.confirm(token.address, { from: accounts[1] });
+                await util.increaseEvmTime(14);
                 await tokenLocker.collect(token.address, { from: accounts[1] });
                 await tokenLocker.confirm(token.address, { from: accounts[1] });
                 assert(false, "no error. something went wrong");
@@ -270,6 +262,7 @@ contract("TokenLocker", (accounts) => {
 
         it("should throw if a `msg.sender` attempts to confirm a collected lockup", async () => {
             try {
+                await util.increaseEvmTime(14);
                 await tokenLocker.collect(token.address, { from: accounts[1] });
                 await tokenLocker.confirm(token.address, { from: accounts[1] });
                 assert(false, "no error. something went wrong");
@@ -282,6 +275,7 @@ contract("TokenLocker", (accounts) => {
         it("should throw when attempts to collect non-existing `_recipient -> _targetToken` pair", async () => {
             try {
                 await tokenLocker.confirm("0xa1234", { from: accounts[5] });
+                await util.increaseEvmTime(14);
                 await tokenLocker.collect("0xa1234", { from: accounts[5] });
                 assert(false, "no error. something went wrong");
             } catch (error) {
@@ -295,13 +289,14 @@ contract("TokenLocker", (accounts) => {
             let confirmedLockedAmountBeforeConfirm = await tokenLocker.confirmedLocked.call();
             assert.equal(confirmedLockedAmountBeforeConfirm, amount);
             let accountsLockupAmount = await tokenLocker.getLockupAmount.call(accounts[1], token.address);
-            util.increaseEvmTime(14);
+            await util.increaseEvmTime(14);
             await tokenLocker.collect(token.address, { from: accounts[1] });
             assert.equal(await tokenLocker.confirmedLocked.call(), confirmedLockedAmountBeforeConfirm - accountsLockupAmount);
         });
 
         it("should throw when attempts to collect a non-confirmed lockup", async () => {
             try {
+                await util.increaseEvmTime(14);
                 await tokenLocker.collect(token.address, { from: accounts[1] });
                 assert(false, "no error. something went wrong");
             } catch (error) {

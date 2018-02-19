@@ -25,22 +25,14 @@ contract TokenLocker is ITokenLocker {
         validAddress(_recipient)
         returns(bool) 
     {
-        require(_amount > 0);
         if (accountLockedAmount[_recipient][_targetToken].hasValue) {
             Lock storage lock = accountLockedAmount[_recipient][_targetToken];
-            uint256 sum = safeAdd(lock.amount, _amount);
-            require(super.checkAllowance(_targetToken, msg.sender, address(this), sum));
             require(lock.releaseTimestamp > now && _releaseTimestamp >= lock.releaseTimestamp);
-
-            assert(_targetToken.transferFrom(msg.sender, address(this), lock.amount));
-
-            lock.amount = sum;
+            assert(super.transferToThis(msg.sender, _targetToken, _amount));
+            lock.amount = _amount;
         } else {
             require(_releaseTimestamp > now);
-            require(super.checkAllowance(_targetToken, msg.sender, address(this), _amount));
-
-            assert(_targetToken.transferFrom(msg.sender, address(this), _amount));
-
+            assert(super.transferToThis(msg.sender, _targetToken, _amount));
             accountLockedAmount[_recipient][_targetToken] = Lock(_releaseTimestamp, _amount, false, false, true);
         }
 
