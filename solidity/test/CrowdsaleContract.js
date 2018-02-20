@@ -1,6 +1,6 @@
 const CrowdsaleContract = artifacts.require('CrowdsaleContract.sol');
 const CrediumToken = artifacts.require("CrediumToken.sol")
-const util = require("./util/Util.js");
+const util = require("./util/TestUtils.js");
 
 function verifyException(stacktrace) {
     return stacktrace.includes('VM Exception') || stacktrace.includes('invalid opcode') || stacktrace.includes('invalid JUMP');

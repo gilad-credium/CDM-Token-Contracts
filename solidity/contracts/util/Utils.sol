@@ -1,7 +1,6 @@
 pragma solidity ^0.4.11;
 
 /*
-* forked from https://github.com/bancorprotocol/contracts
 * Common modifiers and math functions.
 */
 contract Utils {

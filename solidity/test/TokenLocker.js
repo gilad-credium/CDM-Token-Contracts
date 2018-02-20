@@ -3,7 +3,7 @@ const CrediumToken = artifacts.require("CrediumToken.sol");
 const Utils = artifacts.require('Utils.sol');
 const Owned = artifacts.require('Owned.sol');
 const TokenHolder = artifacts.require('TokenHolder.sol');
-const util = require("./util/Util.js");
+const util = require("./util/TestUtils.js");
 
 function verifyException(stacktrace) {
     return stacktrace.includes('VM Exception') || stacktrace.includes('invalid opcode') || stacktrace.includes('invalid JUMP');

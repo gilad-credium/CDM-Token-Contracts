@@ -1,7 +1,5 @@
 pragma solidity ^0.4.11;
 
-// forked from https://github.com/bancorprotocol/contracts
-
 import "../interfaces/IOwned.sol";
 import "./Utils.sol";
 
