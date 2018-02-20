@@ -9,7 +9,7 @@
     "npm": "^8.9.4"
   },
   "scripts": {
-    "localnet": "ganache-cli --defaultBalanceEther 1100000",
+    "localnet": "ganache-cli",
     "test": "solium -d solidity/ && cd solidity && truffle test"
   },
   "dependencies": {
