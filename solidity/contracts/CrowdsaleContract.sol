@@ -25,8 +25,8 @@ contract CrowdsaleContract is Utils, Owned {
         notNow(_crowdsaleStartTime)
         validAddress(_token)
         validAddress(_beneficiary)
-        notThis(_beneficiary)
     {
+        require(isContract(_token));
         crowdsaleStartTime = _crowdsaleStartTime;
         crowdsaleEndTime = safeAdd(crowdsaleStartTime, CROWDSALE_DURATION);
         beneficiary = _beneficiary;
@@ -37,7 +37,11 @@ contract CrowdsaleContract is Utils, Owned {
         receiveETH();
     }
 
-    function receiveETH() private
+    function receiveETH() public payable returns(uint256) {
+        return processTransaction();
+    }
+
+    function processTransaction() private
         returns(uint256)
     {
         assert(tx.gasprice <= MAX_GAS_PRICE);
@@ -54,6 +58,7 @@ contract CrowdsaleContract is Utils, Owned {
         ContributionEvent(msg.sender, msg.value, tokenAmount);
         return tokenAmount;
     }
+    
 
     function calculateOutcome(uint256 _contribution) public pure returns (uint256) {
         return safeMul(_contribution, TOKEN_PRICE_D) / TOKEN_PRICE_N;
@@ -65,6 +70,14 @@ contract CrowdsaleContract is Utils, Owned {
 
     function acceptTokenOwnership() public ownerOnly {
         token.acceptOwnership();
+    }
+
+    function isContract(address _addr) private view returns (bool) {
+        uint32 size;
+        assembly {
+            size := extcodesize(_addr)
+        }
+        return (size > 0);
     }
 
 }

@@ -1,5 +1,5 @@
 const TokenLocker = artifacts.require("TokenLocker.sol");
-const CrediumToken = artifacts.require("CrediumToken.sol")
+const CrediumToken = artifacts.require("CrediumToken.sol");
 const Utils = artifacts.require('Utils.sol');
 const Owned = artifacts.require('Owned.sol');
 const TokenHolder = artifacts.require('TokenHolder.sol');
